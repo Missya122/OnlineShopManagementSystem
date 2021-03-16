@@ -1,0 +1,1 @@
+<?php echo "Today: ".date("Y-m-d") ?>
