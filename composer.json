@@ -1,0 +1,10 @@
+{
+    "name": "missya122/osms",
+    "description": "Online Shop Management System",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Core\\" : "src/core/"
+        }
+    }
+}
