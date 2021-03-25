@@ -4,7 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Core\\" : "src/core/"
+            "Core\\" : "src/core/",
+            "Utils\\" : "src/core/utils"
         }
     }
 }
