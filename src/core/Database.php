@@ -2,6 +2,7 @@
 namespace Core
 {
     use PDO;
+    use Utils\DatabaseFields;
     class Database { 
         protected $connection;
         protected $config;
@@ -10,9 +11,27 @@ namespace Core
             $this->config = $config;
             $this->connetion = null;
         }
-
+        
+        
         public function create($table_name, $fields){
-            
+            $sql = "CREATE TABLE IF NOT EXISTS {$table_name}(";
+
+            $primary_field = null;
+
+            foreach ($fields as $field){
+                if(DatabaseFields::isPrimary($field)){
+                   $primary_field = $field;
+                }
+
+                $sql .= DatabaseFields::parseField($field).",";
+            }
+
+            if($primary_field){
+                $sql .= DatabaseFields::parsePrimary($primary_field);
+            }
+
+            $sql .= ")";
+            return $this->execute($sql);
         }
         
         public function drop($table_name) {
@@ -54,6 +73,8 @@ namespace Core
                 $config["db_user"],
                 $config["db_pass"]
             );
+
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
 }
