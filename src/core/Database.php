@@ -3,6 +3,7 @@ namespace Core
 {
     use PDO;
     use Utils\DatabaseFields;
+
     class Database { 
         protected $connection;
         protected $config;
@@ -13,7 +14,7 @@ namespace Core
         }
         
         
-        public function create($table_name, $fields){
+        public function createTable($table_name, $fields){
             $sql = "CREATE TABLE IF NOT EXISTS {$table_name}(";
 
             $primary_field = null;
@@ -34,7 +35,7 @@ namespace Core
             return $this->execute($sql);
         }
         
-        public function drop($table_name) {
+        public function dropTable($table_name) {
             $sql = "DROP TABLE IF EXISTS {$table_name}";
             return $this->execute($sql);
         }
@@ -77,6 +78,7 @@ namespace Core
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
+    
 }
 
 
