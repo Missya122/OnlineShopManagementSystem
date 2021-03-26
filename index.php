@@ -14,7 +14,7 @@ $fields = [
 
 ];
 
-$tableName = "piesek";
+$tableName = "krowka";
 
 
 $DB->create($tableName, $fields);
