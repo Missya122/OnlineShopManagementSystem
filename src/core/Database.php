@@ -39,9 +39,26 @@ namespace Core
             $sql = "DROP TABLE IF EXISTS {$table_name}";
             return $this->execute($sql);
         }
+
+        public function getSingleData($table_name, $id){
+            $sql = "SELECT * FROM {$table_name} WHERE id_{$table_name} = {$id}";
+            $result = $this->query($sql);
+
+            if($result){
+                return $result->fetch(PDO::FETCH_ASSOC);
+            }
+            
+            return false;
+        }
+
+        public function getAllData($table_name){
+            $sql = "SELECT * FROM {$table_name}";
+            return $this->query($sql);
+        }
         
         public function query($sql){
-
+            $connection = $this->getConnection();
+            return $connection->query($sql);
         }
 
         public function execute($sql){

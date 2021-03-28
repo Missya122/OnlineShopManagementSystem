@@ -4,6 +4,10 @@ namespace Core{
     use Utils\DatabaseFields;
     
     class Employee extends DataModel{
+        public $firstname;
+        public $lastname;
+        public $email;
+        public $password;
 
         public static $fields = [
             ["name"=>"id_employee", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "primary"=>true ],
@@ -17,8 +21,8 @@ namespace Core{
         public static $table = "employee";
 
 
-        public function __construct(){
-            
+        public function __construct($id = null){
+            parent::__construct($this, $id);
         }
 
         public static function init(){

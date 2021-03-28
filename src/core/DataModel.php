@@ -9,9 +9,12 @@ namespace Core{
         public static $fields = [];
         public static $table = null;
 
-        public function __construct(){
-
+        public function __construct($entity, $id = null){
+            if($id){
+                self::retrieveEntity($entity, $id);
+            }
         }
+
         public static function createTable($table, $fields){
             global $DB;
 
@@ -28,6 +31,13 @@ namespace Core{
             $DB->dropTable(
                 $table
             );
+        }
+
+        public static function retrieveEntity($entity, $id){
+            global $DB;
+
+            $fields = $DB->getSingleData($entity::$table, $id);
+            var_dump($fields);
         }
     };
 }
