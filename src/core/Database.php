@@ -13,7 +13,7 @@ namespace Core
             $this->connetion = null;
         }
         
-        public function createTable($table_name, $schema){
+        public function createTable($table, $schema){
 
             if(!isset($schema['fields']) || !isset($schema['primary'])) {
                 return false;
@@ -22,7 +22,7 @@ namespace Core
             $fields = $schema['fields'];
             $primary_field = $schema['primary'];
 
-            $sql = "CREATE TABLE IF NOT EXISTS {$table_name}(";
+            $sql = "CREATE TABLE IF NOT EXISTS {$table}(";
 
             foreach ($fields as $field){
                 $sql .= DatabaseFields::parseField($field).",";
@@ -36,13 +36,13 @@ namespace Core
             return $this->execute($sql);
         }
         
-        public function dropTable($table_name) {
-            $sql = "DROP TABLE IF EXISTS {$table_name}";
+        public function dropTable($table) {
+            $sql = "DROP TABLE IF EXISTS {$table}";
             return $this->execute($sql);
         }
 
-        public function getSingleData($table_name, $id){
-            $sql = "SELECT * FROM {$table_name} WHERE id_{$table_name} = {$id}";
+        public function getSingleData($table, $id){
+            $sql = "SELECT * FROM {$table} WHERE id_{$table} = {$id}";
             $result = $this->query($sql);
 
             if($result){
@@ -52,9 +52,13 @@ namespace Core
             return false;
         }
 
-        public function getAllData($table_name){
-            $sql = "SELECT * FROM {$table_name}";
+        public function getAllData($table){
+            $sql = "SELECT * FROM {$table}";
             return $this->query($sql);
+        }
+
+        public function insertSingleData($table, $fields){
+            $sql = "INSERT INTO {$table} ";
         }
         
         public function query($sql){

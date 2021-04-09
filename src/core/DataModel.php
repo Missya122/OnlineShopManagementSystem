@@ -46,5 +46,13 @@ namespace Core{
                 $entity->$key = $field;
             }
         }
+
+        public function saveEntity(){
+            global $DB;
+
+            if(!$this->id){
+                $DB->insertSingleData($this::$table, (array)$this);
+            }
+        }
     };
 }
