@@ -13,17 +13,18 @@ namespace Core
             $this->connetion = null;
         }
         
-        
-        public function createTable($table_name, $fields){
+        public function createTable($table_name, $schema){
+
+            if(!isset($schema['fields']) || !isset($schema['primary'])) {
+                return false;
+            }
+
+            $fields = $schema['fields'];
+            $primary_field = $schema['primary'];
+
             $sql = "CREATE TABLE IF NOT EXISTS {$table_name}(";
 
-            $primary_field = null;
-
             foreach ($fields as $field){
-                if(DatabaseFields::isPrimary($field)){
-                   $primary_field = $field;
-                }
-
                 $sql .= DatabaseFields::parseField($field).",";
             }
 

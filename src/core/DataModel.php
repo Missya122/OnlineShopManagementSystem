@@ -15,12 +15,12 @@ namespace Core{
             }
         }
 
-        public static function createTable($table, $fields){
+        public static function createTable($table, $schema){
             global $DB;
 
             $DB->createTable(
                 $table,
-                $fields
+                $schema
             );
 
         }
@@ -37,7 +37,14 @@ namespace Core{
             global $DB;
 
             $fields = $DB->getSingleData($entity::$table, $id);
-            var_dump($fields);
+            
+            foreach($fields as $key => $field) {
+                if($key === $entity::$primary) {
+                    $entity->id = $field;
+                }
+
+                $entity->$key = $field;
+            }
         }
     };
 }

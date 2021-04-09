@@ -17,12 +17,8 @@ namespace Utils{
             return $result;
         }
 
-        public static function isPrimary($field){
-            return isset($field["primary"]) && ( $field["primary"] === true );
-        }
-
         public static function parsePrimary($field){
-            return "PRIMARY KEY(".$field["name"].")";
+            return "PRIMARY KEY(".$field.")";
         }
     }
 }
