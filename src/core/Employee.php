@@ -13,7 +13,7 @@ namespace Core{
         public static $primary = 'id_employee';
 
         public static $fields = [
-            ["name"=>"id_employee", "type"=>DatabaseFields::FIELD_INT, "size"=>10 ],
+            ["name"=>"id_employee", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
             ["name"=>"firstname", "type"=>DatabaseFields::FIELD_STRING, "size"=>32 ],
             ["name"=>"lastname", "type"=>DatabaseFields::FIELD_STRING, "size"=>32 ],
             ["name"=>"email", "type"=>DatabaseFields::FIELD_STRING, "size"=>128 ],
@@ -22,7 +22,7 @@ namespace Core{
         
         public static $table = "employee";
 
-
+        // refactor, remove this paramater
         public function __construct($id = null){
             parent::__construct($this, $id);
         }

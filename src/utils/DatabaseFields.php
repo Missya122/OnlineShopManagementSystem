@@ -8,17 +8,65 @@ namespace Utils{
         const FIELD_DATE = "DATE";
         const FIELD_DECIMAL = "DECIMAL";
 
-        public static function parseField($field){
-            $result = implode(" ", [
-                $field["name"],
-                $field["type"]."(".$field["size"].")"
-            ]);
+        const AUTO_INCREMENT = "AUTO_INCREMENT";
 
-            return $result;
+        const NULL_VALUE = "NULL";
+
+        const KEY_SEPARATOR = "`";
+        const VALUE_SEPARATOR = "'";
+
+        public static function prepareForCreate($field){
+            extract($field);
+
+            return isset($extra) ? "{$name} {$type}({$size}) {$extra}" : "{$name} {$type}({$size})";
         }
 
-        public static function parsePrimary($field){
-            return "PRIMARY KEY(".$field.")";
+        public static function preparePrimaryConstraint($field){
+            return "PRIMARY KEY({$field})";
+        }
+
+        public static function preparePrimaryCond($fields, $primary){
+            foreach($fields as $key => $value){
+                if($key === $primary){
+                    return "{$primary} = {$value}";
+                }
+            }
+            return null;
+        }
+
+        public static function prepareValuesForInsert($values){
+           return self::formatForInsert($values, self::VALUE_SEPARATOR);
+        }
+
+        public static function prepareKeysForInsert($keys){
+            return self::formatForInsert($keys, self::KEY_SEPARATOR);
+        }
+
+        public static function formatForInsert($values, $separator){
+            foreach($values as &$value){
+                return self::prepareValue($value, $separator);
+            }
+
+            return implode(",", $values);
+        }
+
+        public static function formatForUpdate($fields){
+            $fields_formatted = [];
+            foreach($fields as $key => $value){
+                $value = self::prepareValue($value, self::VALUE_SEPARATOR);
+                $fields_formatted[] = "{$key} = {$value}";
+            }
+            
+            return implode(",", $fields_formatted);
+        }
+
+        public static function prepareValue($value, $separator){
+            if(!$value){
+                $null_value = self::NULL_VALUE;
+                return "{$null_value}";
+            }else if(is_string($value)){
+                return "{$separator}{$value}{$separator}";
+            }
         }
     }
 }

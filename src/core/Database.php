@@ -1,4 +1,5 @@
 <?php 
+
 namespace Core
 {
     use PDO;
@@ -22,17 +23,17 @@ namespace Core
             $fields = $schema['fields'];
             $primary_field = $schema['primary'];
 
-            $sql = "CREATE TABLE IF NOT EXISTS {$table}(";
+            $fields_formatted = "";
 
             foreach ($fields as $field){
-                $sql .= DatabaseFields::parseField($field).",";
+                $fields_formatted .= DatabaseFields::prepareForCreate($field).",";
             }
 
             if($primary_field){
-                $sql .= DatabaseFields::parsePrimary($primary_field);
+                $fields_formatted .= DatabaseFields::preparePrimaryConstraint($primary_field);
             }
 
-            $sql .= ")";
+            $sql = "CREATE TABLE IF NOT EXISTS {$table}({$fields_formatted})";
             return $this->execute($sql);
         }
         
@@ -57,10 +58,32 @@ namespace Core
             return $this->query($sql);
         }
 
-        public function insertSingleData($table, $fields){
-            $sql = "INSERT INTO {$table} ";
+        public function insert($table, $fields){
+            $keys = array_keys($fields);
+            $values = array_values($fields);
+
+            $values_formatted = DatabaseFields::prepareValuesForInsert($values);
+            $keys_formatted = DatabaseFields::prepareKeysForInsert($keys);
+            
+            $sql = "INSERT INTO {$table} ({$keys_formatted}) VALUES ({$values_formatted})";
+            return $this->execute($sql);
         }
-        
+
+        public function update($table, $fields, $primary){
+            $fields_formatted = DatabaseFields::formatForUpdate($fields);
+            $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
+
+            $sql = "UPDATE {$table} SET {$fields_formatted} WHERE {$cond}";
+            return $this->execute($sql);
+        }
+
+        public function delete($table, $fields, $primary){
+            $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
+
+            $sql = "DELETE FROM {$table} WHERE {$cond}";
+            return $this->execute($sql);
+        }
+
         public function query($sql){
             $connection = $this->getConnection();
             return $connection->query($sql);

@@ -5,13 +5,12 @@ namespace Core{
     use Database;
 
     class DataModel{
-        public $id;
         public static $fields = [];
         public static $table = null;
 
         public function __construct($entity, $id = null){
             if($id){
-                self::retrieveEntity($entity, $id);
+                self::retrieve($entity, $id);
             }
         }
 
@@ -33,25 +32,40 @@ namespace Core{
             );
         }
 
-        public static function retrieveEntity($entity, $id){
+        public static function retrieve($entity, $id){
             global $DB;
+            
+            $primary = $entity::$primary;
 
             $fields = $DB->getSingleData($entity::$table, $id);
-            
-            foreach($fields as $key => $field) {
-                if($key === $entity::$primary) {
-                    $entity->id = $field;
-                }
+            if($fields){
+                foreach($fields as $key => $value) {
+                    $entity->$key = $value;
+                }   
+            }
+            // why does id have string type?
+        }
 
-                $entity->$key = $field;
+        public function save(){
+            global $DB;
+
+            $primary = $this::$primary;
+
+            // modify update for manually set id on new element
+            if($this->$primary){
+                $DB->update($this::$table, (array)$this, $primary);
+            }else{
+                $DB->insert($this::$table, (array)$this);
             }
         }
 
-        public function saveEntity(){
+        public function delete(){
             global $DB;
 
-            if(!$this->id){
-                $DB->insertSingleData($this::$table, (array)$this);
+            $primary = $this::$primary;
+
+            if($this->$primary){
+                $DB->delete($this::$table, (array)$this, $primary);    
             }
         }
     };
