@@ -44,7 +44,7 @@ namespace Utils{
 
         public static function formatForInsert($values, $separator){
             foreach($values as &$value){
-                return self::prepareValue($value, $separator);
+                $value = self::prepareValue($value, $separator);
             }
 
             return implode(",", $values);
@@ -61,11 +61,14 @@ namespace Utils{
         }
 
         public static function prepareValue($value, $separator){
+            $null_value = self::NULL_VALUE;
+
             if(!$value){
-                $null_value = self::NULL_VALUE;
                 return "{$null_value}";
             }else if(is_string($value)){
                 return "{$separator}{$value}{$separator}";
+            }else{
+                return "{$value}";
             }
         }
     }

@@ -8,9 +8,9 @@ namespace Core{
         public static $fields = [];
         public static $table = null;
 
-        public function __construct($entity, $id = null){
+        public function __construct($id = null){
             if($id){
-                self::retrieve($entity, $id);
+                $this->retrieve($id);
             }
         }
 
@@ -32,15 +32,15 @@ namespace Core{
             );
         }
 
-        public static function retrieve($entity, $id){
+        public function retrieve($id){
             global $DB;
             
-            $primary = $entity::$primary;
+            $primary = $this::$primary;
 
-            $fields = $DB->getSingleData($entity::$table, $id);
+            $fields = $DB->getSingleData($this::$table, $id);
             if($fields){
                 foreach($fields as $key => $value) {
-                    $entity->$key = $value;
+                    $this->$key = $value;
                 }   
             }
             // why does id have string type?

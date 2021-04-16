@@ -24,7 +24,7 @@ namespace Core{
 
         // refactor, remove this paramater
         public function __construct($id = null){
-            parent::__construct($this, $id);
+            parent::__construct($id);
         }
 
         public static function init(){
