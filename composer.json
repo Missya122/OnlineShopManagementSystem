@@ -5,7 +5,12 @@
     "autoload": {
         "psr-4": {
             "Core\\" : "src/core/",
-            "Utils\\" : "src/utils/"
+            "Utils\\" : "src/utils/",
+            "Model\\" : "src/model/",
+            "Controllers\\" : "src/controllers/"
         }
+    },
+    "require": {
+        "twig/twig": "^1.42"
     }
 }
