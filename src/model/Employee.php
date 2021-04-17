@@ -1,9 +1,11 @@
 <?php
-namespace Core{
+namespace Models{
 
+    use Core\DataModel;
     use Utils\DatabaseFields;
     
-    class Employee extends DataModel{
+    class Employee extends DataModel
+    {
         public $id_employee;
         public $firstname;
         public $lastname;
@@ -23,17 +25,19 @@ namespace Core{
         public static $table = "employee";
 
         // refactor, remove this paramater
-        public function __construct($id = null){
+        public function __construct($id = null)
+        {
             parent::__construct($id);
         }
 
-        public static function init(){
+        public static function init()
+        {
             parent::createTable(self::$table, ['fields' => self::$fields, 'primary' => self::$primary ]);
         }
 
-        public static function remove(){
+        public static function remove()
+        {
             parent::dropTable(self::$table);
         }
-
     }
 }
