@@ -4,6 +4,7 @@ namespace Core{
 
     use Database;
 
+
     class DataModel{
         public static $fields = [];
         public static $table = null;

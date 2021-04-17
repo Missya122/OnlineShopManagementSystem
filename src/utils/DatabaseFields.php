@@ -1,8 +1,8 @@
-<?php 
+<?php
 namespace Utils{
 
-    class DatabaseFields{
-
+    class DatabaseFields
+    {
         const FIELD_INT = "INT";
         const FIELD_STRING = "VARCHAR";
         const FIELD_DATE = "DATE";
@@ -15,44 +15,55 @@ namespace Utils{
         const KEY_SEPARATOR = "`";
         const VALUE_SEPARATOR = "'";
 
-        public static function prepareForCreate($field){
+        public static function prepareForCreate($field)
+        {
             extract($field);
-
+            
+            $name = self::prepareValue($name, self::KEY_SEPARATOR);
             return isset($extra) ? "{$name} {$type}({$size}) {$extra}" : "{$name} {$type}({$size})";
         }
 
-        public static function preparePrimaryConstraint($field){
+        public static function preparePrimaryConstraint($field)
+        {
             return "PRIMARY KEY({$field})";
         }
 
-        public static function preparePrimaryCond($fields, $primary){
-            foreach($fields as $key => $value){
-                if($key === $primary){
+        public static function preparePrimaryCond($fields, $primary)
+        {
+            foreach ($fields as $key => $value) {
+                if ($key === $primary) {
+                    $primary = self::prepareValue($primary, self::KEY_SEPARATOR);
+                    $value = self::prepareValue($value, self::VALUE_SEPARATOR);
                     return "{$primary} = {$value}";
                 }
             }
             return null;
         }
 
-        public static function prepareValuesForInsert($values){
-           return self::formatForInsert($values, self::VALUE_SEPARATOR);
+        public static function prepareValuesForInsert($values)
+        {
+            return self::formatForInsert($values, self::VALUE_SEPARATOR);
         }
 
-        public static function prepareKeysForInsert($keys){
+        public static function prepareKeysForInsert($keys)
+        {
             return self::formatForInsert($keys, self::KEY_SEPARATOR);
         }
 
-        public static function formatForInsert($values, $separator){
-            foreach($values as &$value){
+        public static function formatForInsert($values, $separator)
+        {
+            foreach ($values as &$value) {
                 $value = self::prepareValue($value, $separator);
             }
 
             return implode(",", $values);
         }
 
-        public static function formatForUpdate($fields){
+        public static function formatForUpdate($fields)
+        {
             $fields_formatted = [];
-            foreach($fields as $key => $value){
+            foreach ($fields as $key => $value) {
+                $key = self::prepareValue($key, self::KEY_SEPARATOR);
                 $value = self::prepareValue($value, self::VALUE_SEPARATOR);
                 $fields_formatted[] = "{$key} = {$value}";
             }
@@ -60,14 +71,15 @@ namespace Utils{
             return implode(",", $fields_formatted);
         }
 
-        public static function prepareValue($value, $separator){
+        public static function prepareValue($value, $separator)
+        {
             $null_value = self::NULL_VALUE;
 
-            if(!$value){
+            if (!$value) {
                 return "{$null_value}";
-            }else if(is_string($value)){
+            } elseif (is_string($value)) {
                 return "{$separator}{$value}{$separator}";
-            }else{
+            } else {
                 return "{$value}";
             }
         }

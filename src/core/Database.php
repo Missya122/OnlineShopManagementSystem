@@ -1,22 +1,24 @@
-<?php 
+<?php
 
 namespace Core
 {
     use PDO;
     use Utils\DatabaseFields;
 
-    class Database { 
+    class Database
+    {
         protected $connection;
         protected $config;
 
-        public function __construct($config){
+        public function __construct($config)
+        {
             $this->config = $config;
             $this->connetion = null;
         }
         
-        public function createTable($table, $schema){
-
-            if(!isset($schema['fields']) || !isset($schema['primary'])) {
+        public function createTable($table, $schema)
+        {
+            if (!isset($schema['fields']) || !isset($schema['primary'])) {
                 return false;
             }
 
@@ -25,11 +27,11 @@ namespace Core
 
             $fields_formatted = "";
 
-            foreach ($fields as $field){
+            foreach ($fields as $field) {
                 $fields_formatted .= DatabaseFields::prepareForCreate($field).",";
             }
 
-            if($primary_field){
+            if ($primary_field) {
                 $fields_formatted .= DatabaseFields::preparePrimaryConstraint($primary_field);
             }
 
@@ -37,28 +39,38 @@ namespace Core
             return $this->execute($sql);
         }
         
-        public function dropTable($table) {
+        public function dropTable($table)
+        {
             $sql = "DROP TABLE IF EXISTS {$table}";
             return $this->execute($sql);
         }
 
-        public function getSingleData($table, $id){
+        public function getSingleData($table, $id)
+        {
             $sql = "SELECT * FROM {$table} WHERE id_{$table} = {$id}";
             $result = $this->query($sql);
 
-            if($result){
+            if ($result) {
                 return $result->fetch(PDO::FETCH_ASSOC);
             }
             
             return false;
         }
 
-        public function getAllData($table){
+        public function getAllData($table)
+        {
             $sql = "SELECT * FROM {$table}";
-            return $this->query($sql);
+            $result = $this->query($sql);
+
+            if ($result) {
+                return $result->fetch(PDO::FETCH_ASSOC);
+            }
+            
+            return false;
         }
 
-        public function insert($table, $fields){
+        public function insert($table, $fields)
+        {
             $keys = array_keys($fields);
             $values = array_values($fields);
 
@@ -69,7 +81,8 @@ namespace Core
             return $this->execute($sql);
         }
 
-        public function update($table, $fields, $primary){
+        public function update($table, $fields, $primary)
+        {
             $fields_formatted = DatabaseFields::formatForUpdate($fields);
             $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
 
@@ -77,33 +90,37 @@ namespace Core
             return $this->execute($sql);
         }
 
-        public function delete($table, $fields, $primary){
+        public function delete($table, $fields, $primary)
+        {
             $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
 
             $sql = "DELETE FROM {$table} WHERE {$cond}";
             return $this->execute($sql);
         }
 
-        public function query($sql){
+        public function query($sql)
+        {
             $connection = $this->getConnection();
             return $connection->query($sql);
         }
 
-        public function execute($sql){
+        public function execute($sql)
+        {
             $connection = $this->getConnection();
             return $connection->exec($sql);
         }
 
-        protected function getConnection() {
-            if($this->connection === null) {
+        protected function getConnection()
+        {
+            if ($this->connection === null) {
                 $this->createConnection();
             }
 
             return $this->connection;
         }
 
-        protected function createConnection(){
-            
+        protected function createConnection()
+        {
             $config = $this->config;
                 
             $dsn_data = implode(";", [
@@ -125,10 +142,3 @@ namespace Core
     }
     
 }
-
-
-
-
-
-
-
