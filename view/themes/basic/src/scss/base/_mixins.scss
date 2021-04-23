@@ -1,0 +1,29 @@
+@mixin font-face($name, $path, $weight: null, $style: null, $ext: ttf) {
+    $src: null;
+
+    $src: append($src, url($path + '.' + $ext));
+
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+
+        src: $src;
+
+        text-rendering: optimizeLegibility;
+        font-display: swap;
+    }
+}
+
+@mixin media-max($breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
+
+@mixin media-min($breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
+

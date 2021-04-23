@@ -31,6 +31,8 @@ namespace Core{
 
         public function display()
         {
+            $this->variables["pagename"] = $this->template;
+            
             $this->twig->display($this->template, $this->variables);
         }
     }
