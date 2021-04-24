@@ -5,7 +5,7 @@ namespace Utils{
     {
         const FIELD_INT = "INT";
         const FIELD_STRING = "VARCHAR";
-        const FIELD_DATE = "DATE";
+        const FIELD_DATETIME = "DATETIME";
         const FIELD_DECIMAL = "DECIMAL";
 
         const AUTO_INCREMENT = "AUTO_INCREMENT";
@@ -20,7 +20,8 @@ namespace Utils{
             extract($field);
             
             $name = self::prepareValue($name, self::KEY_SEPARATOR);
-            return isset($extra) ? "{$name} {$type}({$size}) {$extra}" : "{$name} {$type}({$size})";
+            $size = isset($size) ? self::prepareSize($size) : "";
+            return isset($extra) ? "{$name} {$type}{$size} {$extra}" : "{$name} {$type}{$size}";
         }
 
         public static function preparePrimaryConstraint($field)
@@ -69,6 +70,15 @@ namespace Utils{
             }
             
             return implode(",", $fields_formatted);
+        }
+
+        public static function prepareSize($size)
+        {
+            if (is_array($size)) {
+                $size = implode(",", $size);
+            }
+
+            return is_string($size) || is_integer($size) ? "({$size})" : "";
         }
 
         public static function prepareValue($value, $separator)

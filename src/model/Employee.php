@@ -1,5 +1,5 @@
 <?php
-namespace Models{
+namespace Model{
 
     use Core\DataModel;
     use Utils\DatabaseFields;

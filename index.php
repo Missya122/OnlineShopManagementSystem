@@ -5,6 +5,7 @@ use Core\Configuration;
 use Core\Settings;
 use Core\Database;
 use Controllers\FrontMaintenanceController;
+use Model\Product;
 
 define("BASE_DIR", __DIR__);
 
@@ -25,3 +26,5 @@ if ($is_maintenance) {
     $controller = new FrontMaintenanceController;
     $controller->display();
 }
+
+Product::init();
