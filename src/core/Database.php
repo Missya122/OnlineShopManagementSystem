@@ -63,7 +63,7 @@ namespace Core
             $result = $this->query($sql);
 
             if ($result) {
-                return $result->fetch(PDO::FETCH_ASSOC);
+                return $result->fetchAll(PDO::FETCH_ASSOC);
             }
             
             return false;
