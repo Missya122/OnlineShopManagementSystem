@@ -21,12 +21,18 @@ namespace Core{
 
             $this->initVariables();
         }
+        
 
         public function initVariables()
         {
             $this->variables = [];
 
             $this->variables["title"] = Configuration::getValue("shop_title");
+        }
+
+        protected function appendVariables($variables)
+        {
+            $this->variables = array_merge($this->variables, $variables);
         }
 
         public function display()

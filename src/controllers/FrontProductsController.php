@@ -2,10 +2,11 @@
 namespace Controllers{
     use Core\FrontController;
     use Core\Configuration;
+    use Model\Product;
     
-    class FrontMaintenanceController extends FrontController
+    class FrontProductsController extends FrontController
     {
-        const TEMPLATE = "maintenance";
+        const TEMPLATE = "products/product-list";
 
         public function __construct()
         {
@@ -23,10 +24,9 @@ namespace Controllers{
         {
             parent::initVariables();
 
-            $header = Configuration::getValue("maintenance_header");
-            $content = Configuration::getValue("maintenance_text");
+            $products = Product::getProducts();
 
-            $this->appendVariables(["header" => $header, "content" => $content]) ;
+            $this->appendVariables(['products' => $products]);
         }
     }
 }

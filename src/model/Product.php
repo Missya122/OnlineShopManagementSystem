@@ -7,10 +7,10 @@ namespace Model{
     class Product extends DataModel
     {
         public $id_product;
-        public $price;
         public $name;
+        public $price;
         public $short_description;
-        public $long_desctrption;
+        public $long_description;
         public $date_add;
         
         public static $primary = 'id_product';
@@ -40,6 +40,20 @@ namespace Model{
         public static function remove()
         {
             parent::dropTable(self::$table);
+        }
+
+        public function save()
+        {
+            $this->date_add = date('Y-m-d H:i:s');
+
+            parent::save();
+        }
+
+        public static function getProducts()
+        {
+            global $DB;
+
+            return $DB->getAllData(self::$table);
         }
     }
 }

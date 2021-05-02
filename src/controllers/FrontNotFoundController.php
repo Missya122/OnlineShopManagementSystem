@@ -1,11 +1,12 @@
 <?php
 namespace Controllers{
+
     use Core\FrontController;
     use Core\Configuration;
-    
-    class FrontMaintenanceController extends FrontController
+
+    class FrontNotFoundController extends FrontController
     {
-        const TEMPLATE = "maintenance";
+        const TEMPLATE = "not-found";
 
         public function __construct()
         {
@@ -23,10 +24,9 @@ namespace Controllers{
         {
             parent::initVariables();
 
-            $header = Configuration::getValue("maintenance_header");
-            $content = Configuration::getValue("maintenance_text");
+            $header = Configuration::getValue("404_text");
 
-            $this->appendVariables(["header" => $header, "content" => $content]) ;
+            $this->appendVariables(["header" => $header]) ;
         }
     }
 }

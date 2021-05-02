@@ -1,0 +1,15 @@
+{% extends 'page.twig' %}
+
+{% block content %}    
+    <section id="wrapper">
+        <div class="product-list">
+            {% for product in products  %}
+                <div class="product">
+                    <span class="product__name">{{product.name}}</span>
+                    <span class="product__price">{{product.price}}</span>
+                    <span class="product__description--short">{{product.short_description}}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
