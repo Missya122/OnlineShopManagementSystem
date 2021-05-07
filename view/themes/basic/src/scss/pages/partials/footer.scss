@@ -1,0 +1,23 @@
+.footer{
+    
+    &__newsletter{
+        
+    }
+
+    &__info{
+        @include flex(column);
+
+        a{
+            padding: 2.5px 0;
+        }
+    }
+
+    &__social{
+        @include flex(column);
+
+        a{
+            padding: 5px 0;
+        }
+    }
+
+}

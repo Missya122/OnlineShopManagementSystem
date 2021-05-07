@@ -15,10 +15,9 @@ $DB = new Database($connection);
 
 Configuration::init();
 Configuration::saveValue("theme", "basic");
-Configuration::saveValue("mainftenance_header", "Przerwa techniczna.");
-Configuration::saveValue("maintenance_text", "Trwają prace techniczne. Wrócimy wkrótce.");
-Configuration::saveValue("maintenance_mode", 1);
-Configuration::saveValue("404_text", "404 not found");
+Configuration::saveValue("maintenance_header", "Przerwa techniczna.");
+Configuration::saveValue("maintenance_text", "Trwają prace techniczne, wrócimy wkrótce.");
+Configuration::saveValue("maintenance_mode", 0);
 Configuration::saveValue("shop_title", "Test shop");
 
 $controller = Routing::getCurrentController();

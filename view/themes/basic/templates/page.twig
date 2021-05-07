@@ -11,9 +11,12 @@
         {% include 'partials/header.twig' %}
     {% endblock %}
 
+    <div id="content-wrapper" class="container"> 
     {% block content %}    
-        <section id="wrapper">BASE</section>
+        
     {% endblock %}
+    </div>
+
 
     {% block footer %}    
          {% include 'partials/footer.twig' %}

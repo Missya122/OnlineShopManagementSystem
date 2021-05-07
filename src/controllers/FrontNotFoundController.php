@@ -19,14 +19,5 @@ namespace Controllers{
 
             $this->template = self::TEMPLATE;
         }
-
-        public function initVariables()
-        {
-            parent::initVariables();
-
-            $header = Configuration::getValue("404_text");
-
-            $this->appendVariables(["header" => $header]) ;
-        }
     }
 }

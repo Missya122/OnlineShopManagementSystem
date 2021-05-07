@@ -1,3 +1,50 @@
+
+$breakpoints-to: (xs: 575.98px,
+    sm: 767.98px,
+    md: 991.98px,
+    lg: 1199.98px,
+    xl: 1529.99px,
+);
+
+$breakpoints-from: (sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1530px,
+);
+
+@mixin media-up($size) {
+    @if (map-has-key($map: $breakpoints-from, $key: $size)) {
+        $breakpoint: map-get($map: $breakpoints-from,
+                $key: $size,
+            );
+
+        @media (min-width: $breakpoint) {
+            @content;
+        }
+    }
+
+    @else {
+        @error 'Invalid arguments';
+    }
+}
+
+@mixin media-down($size) {
+    @if (map-has-key($map: $breakpoints-to, $key: $size)) {
+        $breakpoint: map-get($map: $breakpoints-to,
+                $key: $size,
+            );
+
+        @media (max-width: $breakpoint) {
+            @content;
+        }
+    }
+
+    @else {
+        @error 'Invalid argument';
+    }
+}
+
 @mixin font-face($name, $path, $weight: null, $style: null, $ext: ttf) {
     $src: null;
 
@@ -15,15 +62,8 @@
     }
 }
 
-@mixin media-max($breakpoint) {
-    @media (max-width: map-get($breakpoints, $breakpoint)) {
-        @content;
-    }
-}
-
-@mixin media-min($breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
-        @content;
-    }
+@mixin flex($direction: row) {
+    display: flex;
+    flex-direction: $direction;
 }
 

@@ -1,8 +1,14 @@
 {% extends 'page.twig' %}
 
-{% block content %}    
-        <section id="wrapper">
-                <h1>{{header}}</h1>
-                <p>{{content}}</p>
-        </section>
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+
+    <div class="block maintenance-content">
+        <h1>{{header}}</h1>
+        <p>{{content}}</p>
+    </div>
+
 {% endblock %}
+
