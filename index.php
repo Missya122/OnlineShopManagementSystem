@@ -22,5 +22,3 @@ Configuration::saveValue("shop_title", "Test shop");
 
 $controller = Routing::getCurrentController();
 $controller->display();
-
-Product::init();

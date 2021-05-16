@@ -7,20 +7,25 @@
 </head>
 <body id="{{pagename}}">
     <main>
+
+    <div id="header-wrapper" class="container-fluid block"> 
     {% block header %}
         {% include 'partials/header.twig' %}
     {% endblock %}
+    </div>
 
-    <div id="content-wrapper" class="container"> 
+    <div id="content-wrapper" class="container-fluid block"> 
     {% block content %}    
         
     {% endblock %}
     </div>
 
-
+    <div id="footer-wrapper" class="container-fluid block"> 
     {% block footer %}    
          {% include 'partials/footer.twig' %}
     {% endblock %}
+    </div>
+
     </main>  
 </body>
 </html>

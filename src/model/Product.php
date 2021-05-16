@@ -52,7 +52,7 @@ namespace Model{
         public static function getProducts()
         {
             global $DB;
-
+            
             return $DB->getAllData(self::$table);
         }
     }

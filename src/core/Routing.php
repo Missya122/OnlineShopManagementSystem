@@ -4,6 +4,8 @@ namespace Core{
 
     class Routing
     {
+        const HOMEPAGE_CONTROLLER = "Homepage";
+
         public static function getCurrentController()
         {
             $request = self::parseCurrentRequest();
@@ -24,7 +26,7 @@ namespace Core{
 
         private static function getControllerName($request)
         {
-            $controller_name = ucfirst($request[0]);
+            $controller_name = $request[0] ?  ucfirst($request[0]) : self::HOMEPAGE_CONTROLLER;
             return $controller_name;
         }
       
@@ -34,6 +36,7 @@ namespace Core{
                 $controller_classname = "Controllers\\FrontMaintenanceController";
             } else {
                 $controller_classname = "Controllers\\Front{$controller_name}Controller";
+                
             
                 if (!class_exists($controller_classname)) {
                     $controller_classname = "Controllers\\FrontNotFoundController";
