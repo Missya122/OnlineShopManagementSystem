@@ -32,19 +32,28 @@ namespace Core{
       
         private static function createController($controller_name)
         {
-            if (self::isMaintenance()) {
-                $controller_classname = "Controllers\\FrontMaintenanceController";
-            } else {
-                $controller_classname = "Controllers\\Front{$controller_name}Controller";
-                
+            $is_admin = self::isAdmin($controller_name);
+
+            $context = Context::getInstance();
+            $context->controllerType = $is_admin ? Controller::CONTROLLER_BACK : Controller::CONTROLLER_FRONT;
             
+            if (self::isMaintenance() && !$is_admin) {
+                $controller_classname = "Controllers\\MaintenanceController";
+            } else {
+                $controller_classname = "Controllers\\{$controller_name}Controller";
+                
                 if (!class_exists($controller_classname)) {
-                    $controller_classname = "Controllers\\FrontNotFoundController";
+                    $controller_classname = "Controllers\\NotFoundController";
                 }
             }
             
             $controller = new $controller_classname();
             return $controller;
+        }
+
+        private static function isAdmin($controller_name)
+        {
+            return strpos($controller_name, "Admin", 0) !== false;
         }
 
         private static function isMaintenance()

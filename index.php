@@ -5,6 +5,7 @@ use Core\Configuration;
 use Core\Settings;
 use Core\Database;
 use Core\Routing;
+use Core\Context;
 use Model\Product;
 
 define("BASE_DIR", __DIR__);
@@ -12,6 +13,7 @@ define("BASE_DIR", __DIR__);
 $settings = new Settings();
 $connection = $settings->get(Settings::DB_CONNECTION);
 $DB = new Database($connection);
+
 
 Configuration::init();
 Configuration::saveValue("theme", "basic");
@@ -21,4 +23,7 @@ Configuration::saveValue("maintenance_mode", 0);
 Configuration::saveValue("shop_title", "Test shop");
 
 $controller = Routing::getCurrentController();
+
 $controller->display();
+
+$context = Context::getInstance();

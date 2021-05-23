@@ -2,12 +2,15 @@
 
 namespace Core{
 
-    class FrontController
+    class Controller
     {
         protected $twig;
         protected $theme;
         protected $template;
         protected $variables;
+
+        const CONTROLLER_FRONT = "FRONT";
+        const CONTROLLER_BACK = "BACK";
 
         public function __construct()
         {
@@ -16,6 +19,9 @@ namespace Core{
 
         public function init()
         {
+            $context = Context::getInstance();
+            $context->currentController = $this;
+
             $this->theme = Configuration::getValue("theme");
             $this->twig = new Twig($this->theme);
 

@@ -7,7 +7,7 @@
             "Core\\" : "src/core/",
             "Utils\\" : "src/utils/",
             "Model\\" : "src/model/",
-            "Controllers\\" : "src/controllers/"
+            "Controllers\\" : ["src/controllers/front", "src/controllers/back"]
         }
     },
     "require": {
