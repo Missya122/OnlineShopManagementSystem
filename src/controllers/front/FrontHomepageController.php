@@ -1,12 +1,11 @@
 <?php
 namespace Controllers{
-    use Core\FrontController;
+    use Core\Controller;
     use Core\Configuration;
-    use Model\Product;
     
-    class FrontProductsController extends FrontController
+    class FrontHomepageController extends Controller
     {
-        const TEMPLATE = "products/product-list";
+        const TEMPLATE = "homepage";
 
         public function __construct()
         {
@@ -23,10 +22,6 @@ namespace Controllers{
         public function initVariables()
         {
             parent::initVariables();
-
-            $products = Product::getProducts();
-
-            $this->appendVariables(['products' => $products]);
         }
     }
 }

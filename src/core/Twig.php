@@ -24,7 +24,6 @@ namespace Core
         {
             $theme = $this->theme;
             $context = Context::getInstance();
-
             if ($context->controllerType === Controller::CONTROLLER_BACK) {
                 return BASE_DIR."/admin/";
             } else {

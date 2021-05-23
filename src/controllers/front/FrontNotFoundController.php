@@ -1,11 +1,12 @@
 <?php
 namespace Controllers{
-    use Core\FrontController;
+
+    use Core\Controller;
     use Core\Configuration;
-    
-    class FrontHomepageController extends FrontController
+
+    class FrontNotFoundController extends Controller
     {
-        const TEMPLATE = "homepage";
+        const TEMPLATE = "not-found";
 
         public function __construct()
         {
@@ -17,11 +18,6 @@ namespace Controllers{
             parent::init();
 
             $this->template = self::TEMPLATE;
-        }
-
-        public function initVariables()
-        {
-            parent::initVariables();
         }
     }
 }

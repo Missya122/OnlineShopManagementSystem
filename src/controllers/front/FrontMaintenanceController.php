@@ -1,9 +1,9 @@
 <?php
 namespace Controllers{
-    use Core\FrontController;
+    use Core\Controller;
     use Core\Configuration;
     
-    class FrontMaintenanceController extends FrontController
+    class FrontMaintenanceController extends Controller
     {
         const TEMPLATE = "maintenance";
 

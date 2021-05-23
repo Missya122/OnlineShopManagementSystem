@@ -1,12 +1,11 @@
 <?php
 namespace Controllers{
-
-    use Core\FrontController;
     use Core\Configuration;
+    use Core\Controller;
 
-    class FrontNotFoundController extends FrontController
+    class AdminAdminController extends Controller
     {
-        const TEMPLATE = "not-found";
+        const TEMPLATE = "admin";
 
         public function __construct()
         {
@@ -18,6 +17,11 @@ namespace Controllers{
             parent::init();
 
             $this->template = self::TEMPLATE;
+        }
+
+        public function initVariables()
+        {
+            parent::initVariables();
         }
     }
 }

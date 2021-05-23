@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    {% block head %} 
+         {% include 'partials/head.twig' %}
+    {% endblock %}
+</head>
+<body>
+    <main>
+
+    <div id="header-wrapper" class="container-fluid block"> 
+    {% block header %}
+        {% include 'partials/header.twig' %}
+    {% endblock %}
+    </div>
+
+    <div id="content-wrapper" class="container-fluid block"> 
+    {% block content %}    
+        
+    {% endblock %}
+    </div>
+
+    </main>  
+</body>
+</html>
