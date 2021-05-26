@@ -11,7 +11,7 @@ namespace Core{
             $request = self::parseCurrentRequest();
 
             $controller_name = self::getControllerName($request);
-            $controller = self::createController($controller_name);
+            $controller = self::createController($controller_name, $request);
 
             return $controller;
         }
@@ -30,13 +30,27 @@ namespace Core{
             return $controller_name;
         }
       
-        private static function createController($controller_name)
+        private static function createController($controller_name, $request = null)
         {
-            $is_admin = self::isAdmin($controller_name);
+            $is_admin = self::isAdmin($request);
             $controller_name =  $is_admin ? "Admin{$controller_name}" : "Front{$controller_name}";
 
             $context = Context::getInstance();
             $context->controllerType = $is_admin ? Controller::CONTROLLER_BACK : Controller::CONTROLLER_FRONT;
+
+            if ($is_admin) {
+                $is_login = self::isAdminLogin($request);
+                $is_logged = self::isAdminLogged($request);
+                
+                if (!$is_logged) {
+                    if (!$is_login) {
+                        header("Location: /admin/login");
+                        exit();
+                    } else {
+                        $controller_name = "AdminLogin";
+                    }
+                }
+            }
             
             if (self::isMaintenance() && !$is_admin) {
                 $controller_classname = "Controllers\\FrontMaintenanceController";
@@ -53,9 +67,19 @@ namespace Core{
             return $controller;
         }
 
-        private static function isAdmin($controller_name)
+        private static function isAdmin($request)
         {
-            return strpos($controller_name, "Admin", 0) !== false;
+            return $request[0] === "admin";
+        }
+
+        private static function isAdminLogin($request)
+        {
+            return $request[0] === "admin" && $request[1] === "login";
+        }
+
+        private static function isAdminLogged()
+        {
+            return isset($_SESSION['is_logged']) && $_SESSION['is_logged'] === true;
         }
         
 

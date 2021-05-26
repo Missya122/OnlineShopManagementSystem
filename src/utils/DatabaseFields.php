@@ -7,6 +7,7 @@ namespace Utils{
         const FIELD_STRING = "VARCHAR";
         const FIELD_DATETIME = "DATETIME";
         const FIELD_DECIMAL = "DECIMAL";
+        const FIELD_DATE = "DATE";
 
         const AUTO_INCREMENT = "AUTO_INCREMENT";
 

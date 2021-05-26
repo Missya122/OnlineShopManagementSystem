@@ -35,19 +35,19 @@ namespace Core
                 $fields_formatted .= DatabaseFields::preparePrimaryConstraint($primary_field);
             }
 
-            $sql = "CREATE TABLE IF NOT EXISTS {$table}({$fields_formatted})";
+            $sql = "CREATE TABLE IF NOT EXISTS `{$table}`({$fields_formatted})";
             return $this->execute($sql);
         }
         
         public function dropTable($table)
         {
-            $sql = "DROP TABLE IF EXISTS {$table}";
+            $sql = "DROP TABLE IF EXISTS `{$table}`";
             return $this->execute($sql);
         }
 
         public function getSingleData($table, $id)
         {
-            $sql = "SELECT * FROM {$table} WHERE id_{$table} = {$id}";
+            $sql = "SELECT * FROM `{$table}` WHERE id_{$table} = {$id}";
             $result = $this->query($sql);
 
             if ($result) {
@@ -59,7 +59,7 @@ namespace Core
 
         public function getAllData($table)
         {
-            $sql = "SELECT * FROM {$table}";
+            $sql = "SELECT * FROM `{$table}`";
             $result = $this->query($sql);
 
             if ($result) {
@@ -77,7 +77,7 @@ namespace Core
             $values_formatted = DatabaseFields::prepareValuesForInsert($values);
             $keys_formatted = DatabaseFields::prepareKeysForInsert($keys);
             
-            $sql = "INSERT INTO {$table} ({$keys_formatted}) VALUES ({$values_formatted})";
+            $sql = "INSERT INTO `{$table}` ({$keys_formatted}) VALUES ({$values_formatted})";
             return $this->execute($sql);
         }
 
@@ -86,7 +86,7 @@ namespace Core
             $fields_formatted = DatabaseFields::formatForUpdate($fields);
             $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
 
-            $sql = "UPDATE {$table} SET {$fields_formatted} WHERE {$cond}";
+            $sql = "UPDATE `{$table}` SET {$fields_formatted} WHERE {$cond}";
             return $this->execute($sql);
         }
 
@@ -94,7 +94,7 @@ namespace Core
         {
             $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
 
-            $sql = "DELETE FROM {$table} WHERE {$cond}";
+            $sql = "DELETE FROM `{$table}` WHERE {$cond}";
             return $this->execute($sql);
         }
 
