@@ -1,9 +1,14 @@
 <?php
 
-namespace Core{
+namespace Core;
+
+    use Utils\Tools;
 
     class Routing
     {
+        const ADMIN_CONTROLLER_PREFIX = "Admin";
+        const FRONT_CONTROLLER_PREFIX = "Front";
+
         const HOMEPAGE_CONTROLLER = "Homepage";
 
         public static function getCurrentController()
@@ -16,7 +21,7 @@ namespace Core{
             return $controller;
         }
 
-        private static function parseCurrentRequest()
+        protected static function parseCurrentRequest()
         {
             $request = trim($_SERVER['REQUEST_URI'], "/");
             $request = explode("/", $request);
@@ -24,68 +29,105 @@ namespace Core{
             return $request;
         }
 
-        private static function getControllerName($request)
+        protected static function getControllerName($request)
         {
             $controller_name = $request[0] ?  ucfirst($request[0]) : self::HOMEPAGE_CONTROLLER;
             return $controller_name;
         }
       
-        private static function createController($controller_name, $request = null)
+        protected static function createController($controller_name, $request = null)
         {
-            $is_admin = self::isAdmin($request);
-            $controller_name =  $is_admin ? "Admin{$controller_name}" : "Front{$controller_name}";
-
             $context = Context::getInstance();
-            $context->controllerType = $is_admin ? Controller::CONTROLLER_BACK : Controller::CONTROLLER_FRONT;
 
+            $is_admin = self::isAdmin($request);
+
+            $controller_prefix =  $is_admin ? self::ADMIN_CONTROLLER_PREFIX : self::FRONT_CONTROLLER_PREFIX;
+            $context->controllerType = $is_admin ? Controller::CONTROLLER_BACK : Controller::CONTROLLER_FRONT;
+     
             if ($is_admin) {
-                $is_login = self::isAdminLogin($request);
-                $is_logged = self::isAdminLogged($request);
-                
-                if (!$is_logged) {
-                    if (!$is_login) {
-                        header("Location: /admin/login");
-                        exit();
-                    } else {
-                        $controller_name = "AdminLogin";
-                    }
-                }
+                $controller_name = self::getAdminController($controller_name, $request);
+            } else {
+                $controller_name = self::getFrontController($controller_name, $request);
             }
             
-            if (self::isMaintenance() && !$is_admin) {
-                $controller_classname = "Controllers\\FrontMaintenanceController";
-            } else {
-                $controller_classname = "Controllers\\{$controller_name}Controller";
-                
-                if (!class_exists($controller_classname)) {
-                    $controller_classname = "Controllers\\FrontNotFoundController";
-                    $context->controllerType = Controller::CONTROLLER_FRONT;
-                }
+            $controller_classname = self::createControllerClassname($controller_prefix, $controller_name);
+
+            if (!class_exists($controller_classname)) {
+                $controller_classname = self::getNotFoundController();
             }
             
             $controller = new $controller_classname();
             return $controller;
         }
 
-        private static function isAdmin($request)
+        protected static function getAdminController($controller_name, $request)
         {
-            return $request[0] === "admin";
+            $context = Context::getInstance();
+
+            $is_admin_logout = self::isAdminLogout($request);
+
+            if ($is_admin_logout) {
+                $context->setEmployeeLogout();
+                Tools::redirectAdminLogin();
+            }
+
+            $is_admin_logged = $context->isEmployeeLogged();
+
+            if (!$is_admin_logged) {
+                $controller_name = "Login";
+            }
+
+            return $controller_name;
         }
 
-        private static function isAdminLogin($request)
+        protected static function getFrontController($controller_name, $request)
         {
-            return $request[0] === "admin" && $request[1] === "login";
+            $is_mainetance = self::isMaintenance();
+                
+            if ($is_mainetance) {
+                $controller_name = "Maintenance";
+            }
+
+            return $controller_name;
         }
 
-        private static function isAdminLogged()
+        protected static function getNotFoundController()
         {
-            return isset($_SESSION['is_logged']) && $_SESSION['is_logged'] === true;
+            return "Controllers\\FrontNotFoundController";
         }
-        
 
-        private static function isMaintenance()
+        protected static function createControllerClassname($controller_prefix, $controller_name)
+        {
+            return "Controllers\\{$controller_prefix}{$controller_name}Controller";
+        }
+
+        protected static function isAdminLogin($request)
+        {
+            return self::isAdmin($request) && self::isLogin($request);
+        }
+
+        protected static function isAdminLogout($request)
+        {
+            return self::isAdmin($request) && self::isLogout($request);
+        }
+
+        protected static function isAdmin($request)
+        {
+            return isset($request[0]) && $request[0] === "panel";
+        }
+
+        protected static function isLogin($request)
+        {
+            return isset($request[1]) && $request[1] === "login";
+        }
+
+        protected static function isLogout($request)
+        {
+            return isset($request[1]) && $request[1] === "logout";
+        }
+
+        protected static function isMaintenance()
         {
             return (boolean) Configuration::getValue("maintenance_mode");
         }
     }
-}

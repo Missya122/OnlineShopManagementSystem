@@ -10,7 +10,7 @@ namespace Core{
         protected $variables;
 
         const CONTROLLER_FRONT = "FRONT";
-        const CONTROLLER_BACK = "BACK";
+        const CONTROLLER_BACK = "ADMIN";
 
         public function __construct()
         {

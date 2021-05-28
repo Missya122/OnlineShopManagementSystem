@@ -1,6 +1,10 @@
 <?php
 require_once "vendor/autoload.php";
 
+session_start();
+
+define("BASE_DIR", __DIR__);
+
 use Core\Configuration;
 use Core\Settings;
 use Core\Database;
@@ -13,14 +17,17 @@ use Model\Customer;
 use Model\Employee;
 use Model\Order;
 
-session_start();
-
-define("BASE_DIR", __DIR__);
-
 $settings = new Settings();
 $connection = $settings->get(Settings::DB_CONNECTION);
 $DB = new Database($connection);
 
+Order::init();
+Product::init();
+Configuration::init();
+Currency::init();
+Customer::init();
+Cart::init();
+Employee::init();
 
 Configuration::saveValue("theme", "basic");
 Configuration::saveValue("maintenance_header", "Przerwa techniczna.");
@@ -34,4 +41,3 @@ $controller->display();
 
 $context = Context::getInstance();
 
-Order::init();

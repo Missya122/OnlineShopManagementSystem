@@ -1,8 +1,8 @@
 <?php
-namespace Utils{
+namespace Utils;
 
-    class DatabaseFields
-    {
+class DatabaseFields
+{
         const FIELD_INT = "INT";
         const FIELD_STRING = "VARCHAR";
         const FIELD_DATETIME = "DATETIME";
@@ -94,5 +94,5 @@ namespace Utils{
                 return "{$value}";
             }
         }
-    }
 }
+

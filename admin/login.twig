@@ -1,0 +1,26 @@
+{% extends 'panel.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form action="/panel/login/" method="POST">
+                <input type="hidden" name="action" value="login"/>
+                
+                <div class="form-group">
+                    <label for="input_login">Login</label>
+                    <input type="text" class="form-control" id="input_login" name="login" placeholder="Enter login" required/>
+                </div>
+            
+                <div class="form-group">
+                    <label for="input_password">Password</label>
+                    <input type="password" class="form-control" id="input_password" name="password" placeholder="Enter password" required/>
+                </div>
+              
+                <button type="submit" class="btn btn-primary btn-wide">Submit</button>
+                 
+            </form>
+        </div>
+    </div>
+{% endblock %}
