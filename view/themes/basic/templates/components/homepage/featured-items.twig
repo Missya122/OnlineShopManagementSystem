@@ -1,11 +1,9 @@
 
-
 <h5>Tutaj będą najpopularniejsze produkty</h5>
 <div class="row">
     
-    <div class="col-4"><a href="/1">Pierwsza fajna rzecz</a></div>
-    <div class="col-4"><a href="/2">Druga fajna rzecz</a></div>
-    <div class="col-4"><a href="/3">Trzecia fajna rzecz</a></div>
-    
+    {% for item in products|slice(0,3) %}
+    <div class="col-4"><a href="/1">{{item.name}}</a></div>
+    {% endfor %}
 
 </div>

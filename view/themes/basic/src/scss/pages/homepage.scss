@@ -2,9 +2,12 @@
     #content-wrapper{
         width: 100%;
 
-        
         .homepage-content{
             width: 50%;
+
+            img{
+                border-radius: 5px;
+            }
 
             @include media-down(md){
                 width: 75%;
