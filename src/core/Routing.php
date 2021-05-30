@@ -21,7 +21,7 @@ namespace Core;
             return $controller;
         }
 
-        protected static function parseCurrentRequest()
+        public static function parseCurrentRequest()
         {
             $request = trim($_SERVER['REQUEST_URI'], "/");
             $request = explode("/", $request);
@@ -51,9 +51,9 @@ namespace Core;
             }
             
             $controller_classname = self::createControllerClassname($controller_prefix, $controller_name);
-
+            
             if (!class_exists($controller_classname)) {
-                $controller_classname = self::getNotFoundController();
+                $controller_classname = self::getNotFoundController($is_admin);
             }
             
             $controller = new $controller_classname();
@@ -77,6 +77,12 @@ namespace Core;
                 $controller_name = "Login";
             }
 
+            $is_admin_config = self::isAdminConfig($request);
+
+            if($is_admin_config) {
+                $controller_name = "Config";
+            }
+
             return $controller_name;
         }
 
@@ -91,14 +97,19 @@ namespace Core;
             return $controller_name;
         }
 
-        protected static function getNotFoundController()
+        protected static function getNotFoundController($is_admin)
         {
-            return "Controllers\\FrontNotFoundController";
+            return $is_admin ? "Controllers\\AdminNotFoundController" : "Controllers\\FrontNotFoundController";
         }
 
         protected static function createControllerClassname($controller_prefix, $controller_name)
         {
             return "Controllers\\{$controller_prefix}{$controller_name}Controller";
+        }
+
+        protected static function isAdminConfig($request)
+        {
+            return isset($request[1]) && $request[1] === "config";
         }
 
         protected static function isAdminLogin($request)

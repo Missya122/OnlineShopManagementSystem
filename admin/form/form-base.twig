@@ -1,0 +1,12 @@
+<form action="/panel/config/{form_type}" method="POST">
+    {% for field in form.fields %}
+        {% set name = field.name %}
+        {% if field.type == 'text' %}
+            {% include 'form/partials/form-input-text.twig' %}
+        {% elseif field.type == 'number' %}
+            {% include 'form/partials/form-input-number.twig' %}
+        {% elseif field.type == 'date' %}
+            {% include 'form/partials/form-input-date.twig' %}
+        {% endif %}
+    {% endfor %}
+</form>

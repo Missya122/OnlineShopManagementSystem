@@ -1,4 +1,4 @@
-{% extends 'panel.twig' %}
+{% extends 'admin.twig' %}
 
 {% block content %}
 
@@ -11,9 +11,8 @@
     </div>
 
     <div class="col-9">
-        <p>Tu będzie panel środkowy</p>
+        {% include 'form/form-base.twig' %}
     </div>
-
 
 </div>
 
