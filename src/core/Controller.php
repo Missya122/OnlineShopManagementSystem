@@ -1,6 +1,7 @@
 <?php
 
 namespace Core{
+    use Core\Routing;
 
     class Controller
     {
@@ -10,12 +11,15 @@ namespace Core{
         protected $variables;
 
         protected $context;
+        protected $request;
 
         const CONTROLLER_FRONT = "FRONT";
         const CONTROLLER_BACK = "ADMIN";
 
         public function __construct()
         {
+            $this->request = Routing::parseCurrentRequest();
+          
             $this->init();
         }
 

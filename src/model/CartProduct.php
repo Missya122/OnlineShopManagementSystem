@@ -12,6 +12,7 @@ namespace Model{
         public $id_cart;
         public $id_product;
         public $quantity;
+        public $date_add;
 
         public static $primary = 'id_cart_product';
 
@@ -52,7 +53,7 @@ namespace Model{
             p.price, p.image FROM {$table} cp
             LEFT JOIN {$productTable} p ON p.id_product = cp.id_product
             WHERE cp.id_cart = {$idCart}
-            GROUP BY cp.id_product ORDER BY cp.date_add ASC";
+            GROUP BY cp.id_product ORDER BY cp.id_product ASC";
             
             $result = $DB->query($sql);
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -74,18 +75,18 @@ namespace Model{
             $idCartProduct = self::getIdCartProduct($idCart, $idProduct);
 
             $cartProduct = new CartProduct($idCartProduct);
-            $cartProduct->remove();
+            $cartProduct->delete();
         }
 
-        public static function changeQuantity($idCart, $idProduct, $quantity)
+        public static function changeQuantity($idCart, $idProduct, $quantity, $add = false)
         {
             $idCartProduct = self::getIdCartProduct($idCart, $idProduct);
 
             $cartProduct = new CartProduct($idCartProduct);
-            $cartProduct->quantity = $quantity;
+            $cartProduct->quantity = $add ? $cartProduct->quantity + $quantity : $quantity;
 
             if($cartProduct->quantity <= 0) {
-                $cartProduct->remove();
+                $cartProduct->delete();
             } else {
                 $cartProduct->save();
             }
@@ -95,11 +96,12 @@ namespace Model{
         {
             global $DB;
 
-            $table = $this::$table;
+            $table = self::$table;
+          
             $sql = "SELECT * FROM {$table} WHERE id_cart = {$idCart} AND id_product = {$idProduct} ORDER BY date_add ASC";
 
             $result = $DB->query($sql);
-            return $result->fetch();
+            return $result->fetchColumn();
         }
     }
 }

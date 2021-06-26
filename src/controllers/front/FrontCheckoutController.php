@@ -4,7 +4,9 @@ namespace Controllers{
     use Core\Controller;
     use Core\Context;
 
-    use Model\Product;
+    use Core\Database;
+
+    use Model\Carrier;
     
     class FrontCheckoutController extends Controller
     {
@@ -28,11 +30,24 @@ namespace Controllers{
 
             $context = Context::getInstance();
             $cart = $context->cart;
+            $carriers = $this->getCarriers();
+            
+
+            var_dump($carriers);
 
             $this->appendVariables([
+                'carriers' => $carriers,
                 'cart' => $cart,
                 'total_price' => $cart->getTotalPrice()
             ]);
+        }
+
+        public function getCarriers()
+        {
+            global $DB;
+            $carriers = $DB->getAllData(Carrier::$table);
+
+            return $carriers;
         }
     }
 }

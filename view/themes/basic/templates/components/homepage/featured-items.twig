@@ -1,10 +1,18 @@
-
-
 <div class="row featured-products">
+
     <div class="col-12">
         <h5>Bestsellsers</h5>
     </div>
+
     {% for product in products|slice(0,3) %}
-        <div class="col-4 featured-products__product"><a href="/product/{{product.id_product}}">{{product.name}}</a></div>
+        <div class="col-4 featured-products__product">
+            <a href="/product/{{product.id_product}}">
+                <p>{{product.name}}</p>
+                <img src="/img/product/{{product.image}}" />
+                <p>{{product.price}} {{currency}}</p>
+                <p>{{product.short_description}}</p>
+            </a>
+        </div>
     {% endfor %}
+
 </div>

@@ -30,7 +30,6 @@ use Core\Configuration;
             $this->setupCurrency();
             $this->setupCart();
             
-
             if(!$this->areMatching($this->cart, $this->customer))
             {
                 $this->cart->id_customer = $this->customer->id_customer;

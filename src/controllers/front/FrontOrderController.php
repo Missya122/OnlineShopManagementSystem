@@ -4,10 +4,13 @@ namespace Controllers{
 
     use Core\Controller;
     use Core\Context;
+    use Core\Database;
 
     use Utils\Tools;
 
     use Model\Order;
+    use Model\Cart;
+    use Model\Customer;
     use Model\Address;
 
     class FrontOrderController extends Controller
@@ -23,12 +26,20 @@ namespace Controllers{
             $this->context = Context::getInstance();
             $this->error = false;
 
-            if(Tools::isSubmit('new_order')) {
+            if(Order::orderExists(
+                $this->context->cart->id_cart, 
+                $this->context->customer->id_customer
+            )) {
+                $this->error = true;
+            }
+            
+            if(Tools::isSubmit('new_order') && !$this->error) {
                 
                 $this->address = $this->getAddress();
                 
                 if(!$this->error) {
-                    $this->order = $this->getOrder($this->address);
+                    $this->order = $this->createOrder($this->address);
+                    $this->refreshCart();
                 }
             }
 
@@ -71,7 +82,6 @@ namespace Controllers{
                 }
 
                 $address->$key = $value;
-                
             }
 
             if(!$this->error) {
@@ -82,7 +92,7 @@ namespace Controllers{
             return $address;
         }
 
-        protected function getOrder($address)
+        protected function createOrder($address)
         { 
             $order = new Order();
 
@@ -91,12 +101,12 @@ namespace Controllers{
             $order->id_cart = $this->context->cart->id_cart;
             $order->total_price = $this->context->cart->getTotalPrice();
 
+            $order->id_carrier = $this->getCarrier();
             $order->order_note = $this->getOrderNotes();
 
             $order->save();
 
             return $order;
-            
         }
 
         protected function getOrderNotes()
@@ -104,14 +114,19 @@ namespace Controllers{
             return Tools::getValue('order_notes');
         }
 
-        protected function presentAddress($address) 
+        protected function getCarrier()
         {
+            $idCarrier = Tools::getValue('id_carrier');
 
+            return $idCarrier;
         }
 
-        protected function presentOrder($order)
+        protected function refreshCart()
         {
-            
+            $newCart = new Cart();
+            $newCart->save();
+
+            $_SESSION['id_cart'] = $newCart->id_cart;
         }
     }
 }

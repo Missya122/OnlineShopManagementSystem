@@ -5,6 +5,10 @@ html {
     body {
         .btn {
             border-radius: 0;
+
+            &:hover {
+                color: white !important;
+            }
         }
         
         width: 100%;
@@ -15,23 +19,27 @@ html {
 
         background-image: url('/img/shop_background.jpeg');
         
-        a{
+        a {
             transition: color 0.2s;
             
-            &:hover{
+            &:hover {
                 color: $link-hover-color;
                 text-decoration: underline;
             }
+        }
+
+        p {
+            line-height: 1.2;
         }
 
         main {
             min-width: 100%;
             min-height: 100%;
 
-            .content-wrapper{
+            .content-wrapper {
                 margin: $section-offset auto;
             }
-
         }
+
     }
 }

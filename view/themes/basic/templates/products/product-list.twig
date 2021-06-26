@@ -6,10 +6,11 @@
             {% for product in products %}
                 <div class="product">
                     <a class="product__link" href="/product/{{product.id_product}}">
-                        <span class="product__name">{{product.name}}</span>
+                        <h6 class="product__name">{{product.name}}</h6>
                     </a>
-                    <span class="product__price">{{product.price}} {{currency}}</span>
-                    <span class="product__description--short">{{product.short_description}}</span>
+                    <img class="product__image" src="/img/product/{{product.image}}" />
+                    <p class="product__price">{{product.price}} <strong>{{currency}}</strong></p>
+                    <p class="product__description--short">{{product.short_description}}</p>
                 </div>
             {% endfor %}
         </div>

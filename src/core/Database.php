@@ -94,14 +94,16 @@ namespace Core
         public function delete($table, $fields, $primary)
         {
             $cond = DatabaseFields::preparePrimaryCond($fields, $primary);
-
+           
             $sql = "DELETE FROM `{$table}` WHERE {$cond}";
+            
             return $this->execute($sql);
         }
 
         public function query($sql)
         {
             $connection = $this->getConnection();
+            
             return $connection->query($sql);
         }
 

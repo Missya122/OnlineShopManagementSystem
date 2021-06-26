@@ -43,5 +43,15 @@ namespace Model{
         {
             parent::dropTable(self::$table);
         }
+
+        public static function orderExists($idCart, $idCustomer)
+        {
+            global $DB;
+
+            $sql = "SELECT id_order FROM `order` WHERE id_cart = {$idCart} AND id_customer = {$idCustomer}";
+
+            $result = $DB->query($sql);
+            return $result->fetchColumn();
+        }
     }
 }

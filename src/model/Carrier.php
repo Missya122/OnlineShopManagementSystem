@@ -6,14 +6,16 @@ namespace Model {
 
     class Carrier extends DataModel
     {
-        public $id_currency;
+        public $id_carrier;
         public $name;
+        public $price;
 
         public static $primary = "id_carrier";
 
         public static $fields = [
-            ["name"=>"id_carrier", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
-            ["name"=>"name", "type"=>DatabaseFields::FIELD_STRING, "size"=>32],
+            ["name"=> "id_carrier", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
+            ["name"=> "name", "type"=>DatabaseFields::FIELD_STRING, "size"=>32],
+            ["name" => "price", "type" => DatabaseFields::FIELD_DECIMAL, "size" => [10, 2]],
             ["name" => "date_add", "type" => DatabaseFields::FIELD_DATETIME]
 
         ];

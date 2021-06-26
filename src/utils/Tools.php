@@ -11,13 +11,17 @@ class Tools {
         return isset($_GET[$key]) || isset($_POST[$key]);
     }
 
-    public static function redirectAdmin() {
-        header("Location: /panel/");
+    public static function redirect($location)
+    {
+        header("Location: {$location}");
         exit();
     }
 
+    public static function redirectAdmin() {
+        self::redirect("/panel/");
+    }
+
     public static function redirectAdminLogin() {
-        header("Location: /panel/login/");
-        exit();
+        self::redirect("/panel/login/");
     }
 }

@@ -1,0 +1,43 @@
+<div class="cart__totals">
+    <p class="price">
+        <span class="price__label">
+            Total price: 
+        </span>
+        <span class="price__value">
+            {{cart.total_price}} {{currency}}
+        </span>
+    </p>        
+</div>
+
+{% for product in cart.products %}
+    <div class="cart__product cart-product">
+        <div>
+            <h5 class="cart-product__header">
+                <a href="/product/{{product.id_product}}">
+                    <span class="cart-product__name">{{product.name}} &nbsp; </span>
+                </a>
+                <span class="cart-product__quantity"> x {{product.quantity}}</span>
+            </h5>
+
+            <p class="cart-product__price">
+                Total: <span class="value">{{product.price * product.quantity}} {{currency}}</span>
+            </p>
+            
+            <p class="cart-product__actions">
+                <a href="/cart/less/{{product.id_product}}">
+                    <span class="action action--less">&#8722;</span>
+                </a>
+                <a href="/cart/more/{{product.id_product}}">
+                    <span class="action action--more">&#43;</span>
+                </a>
+                <a href="/cart/remove/{{product.id_product}}">
+                    <span class="action action--remove">Remove</span>
+                </a>
+            </p>
+        </div>
+
+        <a href="/product/{{product.id_product}}">
+            <img class="cart-product__image" src="{{product_image_dir}}/{{product.image}}" />
+        </a>    
+    </div>
+{% endfor %}

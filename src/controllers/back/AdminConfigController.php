@@ -177,7 +177,7 @@ class AdminConfigController extends Controller
     }
 
     protected function createEntity($id = null) {
-
+       
         $entity = new $this->model_classname($id);
         $entity_fields = array_keys((array) $entity);
         
@@ -186,6 +186,8 @@ class AdminConfigController extends Controller
             if(!$this->isKeyImage($entity, $key)) {
 
                 $value = Tools::getValue($key);
+
+                
 
                 if($value) {
                     $entity->$key = $value;

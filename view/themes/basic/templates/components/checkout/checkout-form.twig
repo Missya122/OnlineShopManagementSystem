@@ -3,48 +3,59 @@
 
     <div class="form-group">
         <label for="checkout_firstname">Firstname:</label>
-        <input type="text" name="firstname" id="checkout_firstname" required/>
+        <input class="form-control" type="text" name="firstname" id="checkout_firstname" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_lastname">Lastname:</label>
-        <input type="text" name="lastname" id="checkout_lastname" required/>
+        <input class="form-control" type="text" name="lastname" id="checkout_lastname" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_country">Country:</label>
-        <input type="text" name="country" id="checkout_country" required/>
+        <input class="form-control" type="text" name="country" id="checkout_country" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_address">Address:</label>
-        <input type="text" name="address" id="checkout_address" required/>
+        <input class="form-control" type="text" name="address" id="checkout_address" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_city">City:</label>
-        <input type="text" name="city" id="checkout_city" required/>
+        <input class="form-control" type="text" name="city" id="checkout_city" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_district">District:</label>
-        <input type="text" name="district" id="checkout_district" required/>
+        <input class="form-control" type="text" name="district" id="checkout_district" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_postcode">Postcode:</label>
-        <input type="text" name="postcode" id="checkout_postcode" required/>
+        <input class="form-control" type="text" name="postcode" id="checkout_postcode" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_email">Email:</label>
-        <input type="text" name="email" id="checkout_email" required/>
+        <input class="form-control" type="text" name="email" id="checkout_email" required/>
     </div>
 
     <div class="form-group">
         <label for="checkout_order_notes">Order notes:</label>
         <textarea name="order_notes" class="form-control" id="checkout_order_notes" cols="30" rows="10"></textarea>
     </div>
+
+    <div class="form-group">
+        <label for="checkout_carrier">Carrier:</label>
+        <select class="custom-select" name="carrier" id="checkout_carrier">
+        {% for carrier in carriers %}
+            <option value="{{carrier.id_carrier}}">{{carrier.name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+
+    <br/>
 
     <div class="form-group">
         <input type="submit" value="Confirm and pay" class="btn btn-primary">
