@@ -3,4 +3,20 @@
         text-align: center;
     }
 
+    &__left, &__right {
+        display: flex;
+        align-items: center;
+
+        a {
+            margin: 0 10px;
+        }
+    }
+
+    &__left {
+        justify-content: flex-start;
+    }
+    &__right {
+        justify-content: flex-end;
+    }
+
 }

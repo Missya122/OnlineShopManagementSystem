@@ -1,0 +1,19 @@
+{% extends 'panel.twig' %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-3">
+        <h4>Sidebar</h4>
+        <hr>
+        {% include 'partials/admin/sidebar.twig' %}
+    </div>
+
+    <div class="col-9">
+        {% include 'form/form-settings.twig' %}
+    </div>
+
+</div>
+
+{% endblock %}

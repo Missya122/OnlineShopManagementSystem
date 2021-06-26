@@ -1,0 +1,47 @@
+<form method="POST" action="/panel/settings" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="settings">
+    <div class="row form-group settings__header">
+        <div class="col-5">
+            
+        </div>
+
+        <div class="col-5">
+            
+        </div>
+
+    </div>
+
+    {% for field_key, field_value in configuration %}
+       <div class="row form-group settings__value">
+            <div class="col-5">
+                <label for="{{field_key}}">{{field_key}}</label>
+            </div>
+
+            <div class="col-5">
+                <input type="text" class="form-control" name="{{field_key}}" id="{{field_key}}" value="{{field_value}}"/>
+            </div>
+
+            <div class="col-2">
+                <a href="/panel/settings/?action=delete&key={{field_key}}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="row form-group settings__new-value">
+        <div class="col-5">
+            <label for="new_field">Name:</label>
+            <input type="text" class="form-control" name="new_field_name" id="new_field" value=""/>
+        </div>
+
+        <div class="col-5">
+            <label for="new_field">Value:</label>
+            <input type="text" class="form-control" name="new_field_value" id="new_field" value=""/>
+        </div>
+
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary"> Save </button>
+        </div>
+    </div>
+
+    
+</form>

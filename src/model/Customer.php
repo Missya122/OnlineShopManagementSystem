@@ -11,7 +11,6 @@ namespace Model{
         public $lastname;
         public $email;
         public $password;
-        public $birthday;
 
         public static $primary = 'id_customer';
 
@@ -21,7 +20,7 @@ namespace Model{
             ["name"=>"lastname", "type"=>DatabaseFields::FIELD_STRING, "size"=>32 ],
             ["name"=>"email", "type"=>DatabaseFields::FIELD_STRING, "size"=>128 ],
             ["name"=>"password", "type"=>DatabaseFields::FIELD_STRING, "size"=>32 ],
-            ["name"=>"birthday", "type"=>DatabaseFields::FIELD_DATE]
+            ["name" => "date_add", "type" => DatabaseFields::FIELD_DATETIME]
         ];
         
         public static $table = "customer";

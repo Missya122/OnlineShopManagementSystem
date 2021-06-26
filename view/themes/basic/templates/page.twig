@@ -5,26 +5,26 @@
          {% include 'partials/head.twig' %}
     {% endblock %}
 </head>
-<body id="{{pagename}}">
+<body id="{{pagename}}" class="{{pagename}}">
     <main>
 
-    <div id="header-wrapper" class="container-fluid block"> 
-    {% block header %}
-        {% include 'partials/header.twig' %}
-    {% endblock %}
-    </div>
+        <div id="header-wrapper" class="container-fluid content-wrapper block"> 
+        {% block header %}
+            {% include 'partials/header.twig' %}
+        {% endblock %}
+        </div>
 
-    <div id="content-wrapper" class="container-fluid block"> 
-    {% block content %}    
-        
-    {% endblock %}
-    </div>
+        <div id="content-wrapper" class="container-fluid content-wrapper block"> 
+        {% block content %}    
+            
+        {% endblock %}
+        </div>
 
-    <div id="footer-wrapper" class="container-fluid block"> 
-    {% block footer %}    
-         {% include 'partials/footer.twig' %}
-    {% endblock %}
-    </div>
+        <div id="footer-wrapper" class="container-fluid content-wrapper block"> 
+        {% block footer %}    
+            {% include 'partials/footer.twig' %}
+        {% endblock %}
+        </div>
 
     </main>  
 </body>

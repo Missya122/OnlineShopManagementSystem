@@ -1,9 +1,10 @@
 
-<h5>Tutaj będą najpopularniejsze produkty</h5>
-<div class="row">
-    
-    {% for item in products|slice(0,3) %}
-    <div class="col-4"><a href="/1">{{item.name}}</a></div>
-    {% endfor %}
 
+<div class="row featured-products">
+    <div class="col-12">
+        <h5>Bestsellsers</h5>
+    </div>
+    {% for product in products|slice(0,3) %}
+        <div class="col-4 featured-products__product"><a href="/product/{{product.id_product}}">{{product.name}}</a></div>
+    {% endfor %}
 </div>

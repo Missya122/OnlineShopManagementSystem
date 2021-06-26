@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    use DataModel;
+    use PDO;
     use Utils\DatabaseFields;
 
     class Configuration
@@ -11,7 +11,6 @@ namespace Core
             ["name"=>"id_config", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
             ["name"=>"key", "type"=>DatabaseFields::FIELD_STRING, "size"=>255 ],
             ["name"=>"value", "type"=>DatabaseFields::FIELD_STRING, "size"=>1000 ]
-            
         ];
         
         public static $table = "configuration";
@@ -34,10 +33,10 @@ namespace Core
         {
             $check = self::getValue($key);
 
-            if ($check === false) {
+            if (!$check) {
                 return self::addValue($key, $value);
             }
-            
+          
             return self::updateValue($key, $value);
         }
 
@@ -45,27 +44,45 @@ namespace Core
         {
             global $DB;
 
-            $fields = [
-                "id_config" => null,
-                "key" => $key,
-                "value" => $value
-            ];
-
-            return $DB->insert(self::$table, $fields);
+            $table = self::$table;
+            $sql = "INSERT IGNORE INTO {$table} (`id_config`, `key`, `value`) values (null, '{$key}','{$value}')";
+           
+            return $DB->execute($sql);
         }
 
         protected static function updateValue($key, $value)
         {
             global $DB;
 
-            $fields = [
-                "key" => $key,
-                "value" => $value
-            ];
+            $table = self::$table;
+            $sql = "UPDATE {$table} SET `value` = '{$value}' WHERE `key` LIKE '{$key}'";
             
-            return $DB->update(self::$table, $fields, "key");
+            return $DB->execute($sql);
         }
 
+        public static function deleteValue($key)
+        {
+            global $DB;
+
+            $table = self::$table;
+            $sql = "DELETE FROM {$table} WHERE `key` LIKE '{$key}'";
+            
+            return $DB->execute($sql);
+        }
+
+        public static function getAll()
+        {
+            global $DB;
+
+            $table = self::$table;
+            $sql = "SELECT `key`, `value` FROM {$table}";
+
+            $config = $DB->query($sql);
+            $config = $config->fetchAll(PDO::FETCH_ASSOC);
+
+            return $config;
+
+        }
 
         public static function init()
         {

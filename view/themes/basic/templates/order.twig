@@ -1,0 +1,49 @@
+{% extends 'page.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        {% if order_error %}
+            {% set order_header = 'Order failed.' %}
+            {% set order_info = 'There was an error with your order.' %}
+        {% else %}
+            {% set order_header = 'Order confirmation.' %}
+            {% set order_info = 'Your order was successfull' %}
+        {% endif %}
+
+        <h1>{{order_header}}</h1>
+        <h4>{{order_info}}</h4>
+
+        {% if not order_error %}
+        <hr />
+
+        <div class="order-fields">
+            <div class="order-fields__address">
+                {% set excludes = ['date_add', 'id_address'] %}
+                {% for key, value in address %}
+                    {% if key != 'date_add' and key != 'id_address' %} 
+                        <p><strong>{{key|upper}}</strong></p>
+                        {% if value %} 
+                            <p> {{value}} </p> 
+                        {% endif %}
+                    {% endif %}
+                {% endfor %} 
+            </div>
+
+            <div class="order-fields__order">
+                {% set excludes = ['date_add', 'id_order', 'id_address', 'id_cart', 'id_carrier', 'id_customer'] %}
+                {% for key, value in order %}
+                    {% if key not in excludes %} 
+                        <p><strong>{{key|upper}}</strong></p>
+                        {% if value %} 
+                            <p> {{value}} </p> 
+                        {% endif %}
+                    {% endif %}
+                {% endfor %} 
+            </div>
+        </div>
+        
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

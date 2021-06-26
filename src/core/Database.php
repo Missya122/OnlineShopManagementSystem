@@ -78,6 +78,7 @@ namespace Core
             $keys_formatted = DatabaseFields::prepareKeysForInsert($keys);
             
             $sql = "INSERT INTO `{$table}` ({$keys_formatted}) VALUES ({$values_formatted})";
+         
             return $this->execute($sql);
         }
 
@@ -134,7 +135,8 @@ namespace Core
             $this->connection = new PDO(
                 $dsn,
                 $config["db_user"],
-                $config["db_pass"]
+                $config["db_pass"],
+                [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
             );
 
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

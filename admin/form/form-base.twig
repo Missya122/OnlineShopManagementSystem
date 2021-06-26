@@ -1,0 +1,25 @@
+<form method="POST" action="/panel/config/{{type}}" enctype="multipart/form-data" class="config-form">
+    <input type="hidden" name="action" value="save">
+    {% if form.id_object %}
+        <input type="hidden" name="id" value="{{form.id_object}}">
+    {% endif %}
+    {% for field in form.fields %}
+        {% if not field.is_primary %}
+            {% if field.type == 'text' %}
+                {% if field.is_image %}
+                    {% include 'form/partials/form-input-image.twig' %}
+                {% else %}
+                    {% include 'form/partials/form-input-text.twig' %}
+                {% endif %}
+            {% elseif field.type == 'number' %}
+                {% include 'form/partials/form-input-number.twig' %}
+            {% elseif field.type == 'date' %}
+                {% include 'form/partials/form-input-date.twig' %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">
+        {% if form.id_object %} Save {% else %} Add {% endif %}
+    </button>
+</form>

@@ -1,0 +1,10 @@
+<div class="row featured-products js-products-slider">
+    {% for product in products %}
+        <div class="col-4 featured-products__product">
+            <a href="/product/{{product.id_product}}">
+                <img src="/{{image_dir}}/{{product.image}}" alt="" />
+                <span>{{product.name}}</span>
+            </a>
+        </div>
+    {% endfor %}
+</div>

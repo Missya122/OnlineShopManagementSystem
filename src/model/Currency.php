@@ -7,14 +7,13 @@ namespace Model{
     {
         public $id_currency;
         public $name;
-        public $conversion_rate;
 
         public static $primary = "id_currency";
 
         public static $fields = [
             ["name"=>"id_currency", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
             ["name"=>"name", "type"=>DatabaseFields::FIELD_STRING, "size"=>32 ],
-            ["name"=>"conversion_rate", "type"=>DatabaseFields::FIELD_DECIMAL, "size"=> [13,6] ]
+            ["name" => "date_add", "type" => DatabaseFields::FIELD_DATETIME],
         ];
 
         public static $table = "currency";

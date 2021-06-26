@@ -1,0 +1,26 @@
+{% extends 'page.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <h1>{{product.name}}</h1>
+        <h6>{{product.price}} {{currency}}</h6>
+        <p>{{product.long_description}}</p>
+    </div>
+
+    <div class="col-6">
+        <img src="/{{image_dir}}/{{product.image}}" alt="" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form action="/cart" method="POST">
+            <button type="submit" class="btn btn-primary">Add to cart</button>
+
+            <input type="hidden" name="action" value="add"/>
+            <input type="hidden" name="id_product" value="{{product.id_product}}"/>
+        </form>
+    </div>
+</div>
+{% endblock %}

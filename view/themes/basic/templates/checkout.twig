@@ -1,0 +1,31 @@
+{% extends 'page.twig' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Checkout</h1>
+        <h4>Here you can place your order.</h4>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <h4 class="price">
+            <span class="label">Total price:</span>
+            <span class="value">{{cart.total_price}} {{currency}}</span>
+        </h4>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        {% include '/components/checkout/checkout-form.twig' %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+   
+   <hr />
+   <h1><strong>{{type|upper}}</strong></h1>
+   <table class="table table-striped">
+    <thead>
+        <tr>
+            {% for key, value in objects[0] %}
+                <th>{{key|replace({'_': " "})}}</th>
+            {% endfor %}
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in objects %}
+            <tr>
+                {% for key, value in object %}
+                    <td>{{value}}</td>
+                {% endfor %}
+
+                <td>
+                    <a href="/panel/config/{{type}}/?action=edit&id={{object.id}}" method="POST">Edit</a>
+                    <a href="/panel/config/{{type}}/?action=delete&id={{object.id}}" method="POST">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -8,6 +8,7 @@ namespace Model{
     {
         public $id_product;
         public $name;
+        public $image;
         public $price;
         public $short_description;
         public $long_description;
@@ -16,11 +17,12 @@ namespace Model{
         public static $primary = 'id_product';
 
         public static $fields = [
-            ["name" => "id_product", "type" => DatabaseFields::FIELD_INT, "size" => 10, "extra" => DatabaseFields::AUTO_INCREMENT ],
-            ["name" => "name", "type" => DatabaseFields::FIELD_STRING, "size" => 255 ],
-            ["name" => "price", "type" => DatabaseFields::FIELD_DECIMAL, "size" => [10, 2] ],
-            ["name" => "short_description", "type" => DatabaseFields::FIELD_STRING, "size" => 500 ],
-            ["name" => "long_description", "type" => DatabaseFields::FIELD_STRING, "size" => 2000 ],
+            ["name" => "id_product", "type" => DatabaseFields::FIELD_INT, "size" => 10, "extra" => DatabaseFields::AUTO_INCREMENT],
+            ["name" => "image", "type" => DatabaseFields::FIELD_STRING, "size" => 255, "is_image" => true],
+            ["name" => "name", "type" => DatabaseFields::FIELD_STRING, "size" => 255],
+            ["name" => "price", "type" => DatabaseFields::FIELD_DECIMAL, "size" => [10, 2]],
+            ["name" => "short_description", "type" => DatabaseFields::FIELD_STRING, "size" => 500],
+            ["name" => "long_description", "type" => DatabaseFields::FIELD_STRING, "size" => 2000],
             ["name" => "date_add", "type" => DatabaseFields::FIELD_DATETIME]
 
         ];

@@ -1,8 +1,9 @@
 .block{
     background: $mint;
-
     box-shadow: 0 10px 6px -6px rgba(black, 0.2);
 
     padding: 25px;
+    
+    border-bottom: 25px solid $white;
 
 }

@@ -1,8 +1,22 @@
-{% extends 'page.twig' %}
+{% extends 'page-large.twig' %}
 
+{% block pre_content %}
+    <div class="row">
+        <div class="col-md-6">SOMETHING ABOUT THE SHOP</div>
+        <div class="col-md-6">WITH THE PHOTO</div>
+    </div>
+{% endblock %}
 
 {% block content %}
 
-{% include "components/homepage/featured-items.twig" %}
+    {% include "components/homepage/featured-slider.twig" %}
+    {% include "components/homepage/featured-items.twig" %}
 
+{% endblock %}
+
+{% block post_content %}
+    <div class="row">
+        <div class="col-md-6">OTHER PHOTO</div>
+        <div class="col-md-6">SOMETHING DIFFERENT ABOUT THE SHOP</div>
+    </div>
 {% endblock %}

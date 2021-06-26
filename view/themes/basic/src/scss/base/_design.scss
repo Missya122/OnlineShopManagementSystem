@@ -1,11 +1,19 @@
 html {
     width: 100%;
     height: 100%;
+
     body {
+        .btn {
+            border-radius: 0;
+        }
+        
         width: 100%;
         height: 100%;
 
         font-family: $font-main;
+        font-weight: 300;
+
+        background-image: url('/img/shop_background.jpeg');
         
         a{
             transition: color 0.2s;
@@ -20,7 +28,7 @@ html {
             min-width: 100%;
             min-height: 100%;
 
-            #content-wrapper{
+            .content-wrapper{
                 margin: $section-offset auto;
             }
 

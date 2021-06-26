@@ -10,6 +10,7 @@ namespace Core;
         const FRONT_CONTROLLER_PREFIX = "Front";
 
         const HOMEPAGE_CONTROLLER = "Homepage";
+        const STATIC_PAGE_CONTROLLER = "Static";
 
         public static function getCurrentController()
         {
@@ -21,7 +22,7 @@ namespace Core;
             return $controller;
         }
 
-        protected static function parseCurrentRequest()
+        public static function parseCurrentRequest()
         {
             $request = trim($_SERVER['REQUEST_URI'], "/");
             $request = explode("/", $request);
@@ -51,9 +52,14 @@ namespace Core;
             }
             
             $controller_classname = self::createControllerClassname($controller_prefix, $controller_name);
-
+            
             if (!class_exists($controller_classname)) {
-                $controller_classname = self::getNotFoundController();
+
+                if(!self::pageExists($controller_name)) {
+                    $controller_classname = self::getStaticController();
+                } else {
+                    $controller_classname = self::getNotFoundController($is_admin);
+                }
             }
             
             $controller = new $controller_classname();
@@ -71,7 +77,20 @@ namespace Core;
                 Tools::redirectAdminLogin();
             }
 
+            $is_admin_config = self::isAdminConfig($request);
+
+            if($is_admin_config) {
+                $controller_name = "Config";
+            }
+
+            $is_admin_settings = self::isAdminSettings($request);
+
+            if($is_admin_settings) {
+                $controller_name = "Settings";
+            }
+
             $is_admin_logged = $context->isEmployeeLogged();
+
 
             if (!$is_admin_logged) {
                 $controller_name = "Login";
@@ -91,14 +110,30 @@ namespace Core;
             return $controller_name;
         }
 
-        protected static function getNotFoundController()
+        protected static function getStaticController()
         {
-            return "Controllers\\FrontNotFoundController";
+            $controller_name = self::STATIC_PAGE_CONTROLLER;
+            return "Controllers\\Front{$controller_name}Controller";
+        }
+
+        protected static function getNotFoundController($is_admin)
+        {
+            return $is_admin ? "Controllers\\AdminNotFoundController" : "Controllers\\FrontNotFoundController";
         }
 
         protected static function createControllerClassname($controller_prefix, $controller_name)
         {
             return "Controllers\\{$controller_prefix}{$controller_name}Controller";
+        }
+
+        protected static function isAdminSettings($request)
+        {
+            return isset($request[1]) && $request[1] === "settings";
+        }
+
+        protected static function isAdminConfig($request)
+        {
+            return isset($request[1]) && $request[1] === "config";
         }
 
         protected static function isAdminLogin($request)
@@ -129,5 +164,24 @@ namespace Core;
         protected static function isMaintenance()
         {
             return (boolean) Configuration::getValue("maintenance_mode");
+        }
+
+        protected static function pageExists($pagename)
+        {
+            $config = parse_ini_file("config/pages.ini", true);
+            $static = $config['static'];
+
+            
+            $enabled = filter_var($static['enabled'], FILTER_VALIDATE_BOOLEAN);
+
+            if($enabled) {
+                $pages = isset($static['pages']) ? $static['pages'] : [];
+
+                $pageIndex = array_search($pagename, $pages);
+
+                return $pageIndex !== false;
+            }
+
+            return false; 
         }
     }

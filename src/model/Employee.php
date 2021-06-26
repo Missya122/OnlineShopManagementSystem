@@ -21,7 +21,8 @@ namespace Model{
             ["name"=>"lastname", "type"=>DatabaseFields::FIELD_STRING, "size"=>32],
             ["name"=>"email", "type"=>DatabaseFields::FIELD_STRING, "size"=>128],
             ["name"=>"login", "type"=>DatabaseFields::FIELD_STRING, "size"=>32],
-            ["name"=>"password", "type"=>DatabaseFields::FIELD_STRING, "size"=>32]
+            ["name"=>"password", "type"=>DatabaseFields::FIELD_STRING, "size"=>32],
+            ["name" => "date_add", "type" => DatabaseFields::FIELD_DATETIME]
         ];
         
         public static $table = "employee";

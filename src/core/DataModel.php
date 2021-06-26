@@ -3,6 +3,7 @@
 namespace Core;
 
 use Database;
+use PDO;
 
 class DataModel
 {
@@ -10,6 +11,7 @@ class DataModel
     {
         if ($id) {
             $this->retrieve($id);
+            $this->{$this::$primary} = $id;
         }
     }
 
@@ -36,14 +38,14 @@ class DataModel
     {
         global $DB;
             
-        $primary = $this::$primary;
-
         $fields = $DB->getSingleData($this::$table, $id);
+
         if ($fields) {
             foreach ($fields as $key => $value) {
                 $this->$key = $value;
             }
         }
+
         // why does id have string type?
     }
 
@@ -52,12 +54,16 @@ class DataModel
         global $DB;
 
         $primary = $this::$primary;
+        $fields = $this->getCurrentFields();
+
+        $fields['date_add'] = date('Y-m-d H:m:i');
 
         // modify update for manually set id on new element
         if ($this->$primary) {
-            $DB->update($this::$table, (array)$this, $primary);
+            $DB->update($this::$table, $fields, $primary);
         } else {
-            $DB->insert($this::$table, (array)$this);
+            $DB->insert($this::$table, $fields);
+            $this->$primary = $this->getPrimary();
         }
     }
 
@@ -70,6 +76,46 @@ class DataModel
         if ($this->$primary) {
             $DB->delete($this::$table, (array)$this, $primary);
         }
+    }
+
+    public static function getPrimary()
+    {
+        global $DB;
+
+        $primary = static::$primary;
+        $table = static::$table;
+
+        $sql = "SELECT MAX({$primary}) id
+                FROM `{$table}`";
+
+        $result = (int) $DB->query($sql)->fetchColumn();
+
+        return $result;
+    }
+
+    public static function getImageDirectory()
+    {
+        $name = static::$table;
+
+        return "img/{$name}";
+    }
+
+    protected function getCurrentFields()
+    {
+        $result = [];
+
+        $fields = (array) $this;
+        $definition_fields = $this::$fields;
+
+        foreach($fields as $field_key => $field) {
+            foreach(array_column($definition_fields, 'name') as $def_field_key) {
+                if($field_key === $def_field_key) {
+                    $result[$field_key] = $field;
+                }
+            }
+        }
+
+        return $result;
     }
 };
 

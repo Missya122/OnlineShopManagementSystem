@@ -9,6 +9,8 @@ namespace Core{
         protected $template;
         protected $variables;
 
+        protected $context;
+
         const CONTROLLER_FRONT = "FRONT";
         const CONTROLLER_BACK = "ADMIN";
 
@@ -22,18 +24,20 @@ namespace Core{
             $context = Context::getInstance();
             $context->currentController = $this;
 
+            $this->context = $context;
+
             $this->theme = Configuration::getValue("theme");
             $this->twig = new Twig($this->theme);
 
             $this->initVariables();
         }
         
-
         public function initVariables()
         {
             $this->variables = [];
 
             $this->variables["title"] = Configuration::getValue("shop_title");
+            $this->variables["currency"] = Configuration::getValue("currency");
         }
 
         protected function appendVariables($variables)

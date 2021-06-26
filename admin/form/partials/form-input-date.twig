@@ -1,0 +1,8 @@
+<div class="row form-group">
+    <div class="col-6">
+        <label for="{{field.name}}">{{field.displayname}}</label>
+    </div>
+    <div class="col-6">
+        <input type="date" {% if field.name == 'date_add' %} disabled {% endif %} name="{{field.name}}" value="{{field.value}}" class="form-control datepicker" placeholder="Select Date"/>
+    </div>
+</div>

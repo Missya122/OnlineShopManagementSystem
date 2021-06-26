@@ -1,6 +1,14 @@
 #homepage{
-    #content-wrapper{
+    .content-wrapper{
         width: 100%;
+
+        .featured-products {
+            margin: 10px auto 50px;
+
+            &__product {
+                padding: 25px 0;
+            }
+        }
 
         .homepage-content{
             width: 50%;
@@ -20,6 +28,7 @@
             }
             
             margin: 25% auto 0;
+    
         }
     }
 }
