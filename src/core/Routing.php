@@ -96,6 +96,12 @@ namespace Core;
                 $controller_name = "Login";
             }
 
+            $is_admin_config = self::isAdminConfig($request);
+
+            if($is_admin_config) {
+                $controller_name = "Config";
+            }
+
             return $controller_name;
         }
 
