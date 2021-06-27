@@ -55,7 +55,7 @@ namespace Core;
             
             if (!class_exists($controller_classname)) {
 
-                if(!self::pageExists($controller_name)) {
+                if(self::pageExists($controller_name)) {
                     $controller_classname = self::getStaticController();
                 } else {
                     $controller_classname = self::getNotFoundController($is_admin);
@@ -174,10 +174,10 @@ namespace Core;
 
         protected static function pageExists($pagename)
         {
+            $pagename = strtolower($pagename);
             $config = parse_ini_file("config/pages.ini", true);
             $static = $config['static'];
 
-            
             $enabled = filter_var($static['enabled'], FILTER_VALIDATE_BOOLEAN);
 
             if($enabled) {

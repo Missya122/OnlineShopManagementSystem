@@ -261,9 +261,6 @@ class AdminConfigController extends Controller
         return $result;
     }
 
-    protected function getSingleObject($id) {
-
-    }
 }
 
 
