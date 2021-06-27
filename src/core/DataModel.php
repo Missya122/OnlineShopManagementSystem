@@ -56,7 +56,7 @@ class DataModel
         $primary = $this::$primary;
         $fields = $this->getCurrentFields();
 
-        $fields['date_add'] = date('Y-m-d H:m:i');
+        $fields['date_add'] = date('Y-m-d H:i:s');
 
         // modify update for manually set id on new element
         if ($this->$primary) {

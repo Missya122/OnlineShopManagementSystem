@@ -36,13 +36,9 @@ Cart::init();
 CartProduct::init();
 Employee::init();
 
-Configuration::saveValue("theme", "basic");
+Configuration::installShop();
 
-Configuration::saveValue("maintenance_header", "Przerwa techniczna.");
-Configuration::saveValue("maintenance_text", "Trwają prace techniczne, wrócimy wkrótce.");
-Configuration::saveValue("maintenance_mode", 0);
-
-Configuration::saveValue("shop_title", "Test shop");
+Configuration::initTimezone();
 
 $controller = Routing::getCurrentController();
 $controller->display();

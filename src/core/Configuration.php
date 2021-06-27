@@ -93,6 +93,7 @@ namespace Core
                 ['fields' => self::$fields, 'primary' => self::$primary]
             );
         }
+        
 
         public static function remove()
         {
@@ -101,6 +102,24 @@ namespace Core
             $DB->dropTable(
                 self::$table
             );
+        }
+
+        public static function initTimezone(){
+    
+            $timezone = self::getValue('timezone');
+
+            if($timezone){
+                date_default_timezone_set("Etc/GMT{$timezone}");
+            }
+        }
+
+        public static function installShop(){
+            
+            self::saveValue("theme", "basic");
+            self::saveValue("maintenance_header", "Przerwa techniczna.");
+            self::saveValue("maintenance_text", "Trwają prace techniczne, wrócimy wkrótce.");
+            self::saveValue("maintenance_mode", 0);
+            self::saveValue("shop_title", "Test shop");
         }
     }
 }

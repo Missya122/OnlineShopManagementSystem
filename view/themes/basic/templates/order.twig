@@ -31,7 +31,7 @@
             </div>
 
             <div class="order-fields__order">
-                {% set excludes = ['date_add', 'id_order', 'id_address', 'id_cart', 'id_carrier', 'id_customer'] %}
+                {% set excludes = ['date_add', 'id_order', 'id_address', 'id_cart', 'id_customer'] %}
                 {% for key, value in order %}
                     {% if key not in excludes %} 
                         <p><strong>{{key|upper}}</strong></p>

@@ -31,9 +31,6 @@ namespace Controllers{
             $context = Context::getInstance();
             $cart = $context->cart;
             $carriers = $this->getCarriers();
-            
-
-            var_dump($carriers);
 
             $this->appendVariables([
                 'carriers' => $carriers,

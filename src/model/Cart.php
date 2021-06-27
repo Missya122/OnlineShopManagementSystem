@@ -9,7 +9,6 @@ namespace Model{
     class Cart extends DataModel
     {
         public $id_cart;
-        public $id_address;
         public $id_customer;
         public $date_add;
 
@@ -17,9 +16,8 @@ namespace Model{
 
         public static $fields = [
             ["name"=>"id_cart", "type"=>DatabaseFields::FIELD_INT, "size"=>10, "extra"=>DatabaseFields::AUTO_INCREMENT ],
-            ["name"=>"id_address", "type"=>DatabaseFields::FIELD_INT, "size"=>10],
             ["name"=>"id_customer", "type"=>DatabaseFields::FIELD_INT, "size"=>10],
-            ["name"=>"date_add", "type"=>DatabaseFields::FIELD_DATETIME],
+            ["name"=>"date_add", "type"=>DatabaseFields::FIELD_DATETIME]
         ];
         
         public static $table = "cart";
